@@ -1,3 +1,5 @@
+const Discord = require("discord.js");
+
 module.exports = 
 {
 	handleMessage : (m) =>
@@ -17,8 +19,15 @@ module.exports =
 		{
 			let spoiler = rot13(findSpoiler(r.message.content)[1]);
 			let regex = /!spoiler\((.*)\)/g;
-			let newMessage = r.message.content.replace(regex, spoiler);
-			u.send(newMessage).then(() => console.log("Spoiler sent! o7")).catch(console.error);
+			let newMessage = r.message.content.replace(regex, "*" + spoiler + "*");
+			
+			let embed = new Discord.RichEmbed()
+			.setColor("#ab6cfc")
+			.setAuthor(r.message.author.username, r.message.author.avatarURL)
+			.addField("🙈", newMessage)
+			.setFooter("Originally posted in #" + r.message.channel.name);
+
+			u.send(embed).then(() => console.log("Spoiler sent! o7")).catch(console.error);
 		}
 	}
 }
