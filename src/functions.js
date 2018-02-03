@@ -1,4 +1,10 @@
 const Discord = require("discord.js");
+const Colours =
+{
+	purple : "#ab6cfc",
+	green : "#1db954",
+	red : "#e01818"
+}
 
 module.exports = 
 {
@@ -22,7 +28,7 @@ module.exports =
 			let newMessage = r.message.content.replace(regex, "*" + spoiler + "*");
 			
 			let embed = new Discord.RichEmbed()
-			.setColor("#ab6cfc")
+			.setColor(Colours.green)
 			.setAuthor(r.message.author.username, r.message.author.avatarURL)
 			.addField("🙈", newMessage)
 			.setFooter("Originally posted in #" + r.message.channel.name);
