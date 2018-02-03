@@ -2,14 +2,14 @@ const Discord = require("discord.js");
 
 module.exports = 
 {
-	handleMessage : (m) =>
+	handleMessage : (message) =>
 	{
-		if (!m.author.bot && m.content.length > 1)
+		if (!message.author.bot && message.content.length > 1)
 		{
-			// let words = m.content.split(" ");
-			if(findSpoiler(m.content))
+			// let words = message.content.split(" ");
+			if(findSpoiler(message.content))
 			{
-				m.react("🙈");
+				handleSpoiler(message);
 			}
 		}
 	},
@@ -48,4 +48,31 @@ function rot13 (s)
 			 "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm".indexOf(c)
 	  );
 	} );
+}
+
+function handleSpoiler (message)
+{
+	message.channel.send("Processing spoiler, waiting for a DM from the author...")
+				.then((botMessage) =>
+				{
+					message.author.send("Reply to me with your spoiler and I'll format it for you o7")
+					.then((botInstructionMessage) =>
+					{
+						message.author.dmChannel.awaitMessages(() => { return true; }, { max: 1, time: 60000, errors: ['time'] })
+						.then((collected) =>
+						{
+							// console.log(collected.first().content);
+							message.author.send("Response collected o7");
+							
+							botMessage.edit(rot13(collected.first().content))
+							.then(botMessage.react("🙈"));
+						})
+						.catch((error) =>
+						{
+							message.author.send("No response collected, aborting.");
+						});
+					})
+					.catch(console.error);
+				})
+				.catch(console.error);
 }
