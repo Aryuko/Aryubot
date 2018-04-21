@@ -14,5 +14,5 @@ client.on("disconnected", () => {
 	process.exit(1);
 });
 
-client.on("message", (m) => Functions.handleMessage(m));
-client.on("messageReactionAdd", (r, u) => Functions.handleReaction(r, u, client.user.id));
+client.on("message", (message) => Functions.handleMessage(message));
+client.on("messageReactionAdd", (reaction, user) => Functions.handleReaction(reaction, user, client.user.id));

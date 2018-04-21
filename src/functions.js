@@ -25,36 +25,35 @@ module.exports =
 			}
 		}
 	},
-	handleReaction : (r, u, cud) =>
+	handleReaction : (reaction, user, clientId) =>
 	{
-		if (u.id != cud && r.me && r.emoji == "🙈")
+		if (user.id != clientId && reaction.me && reaction.emoji == "🙈")
 		{
-			let spoiler = rot13(findSpoiler(r.message.content)[1]);
+			let spoiler = rot13(findSpoiler(reaction.message.content)[1]);
 			let regex = /!spoiler\((.*)\)/g;
-			let newMessage = r.message.content.replace(regex, "*" + spoiler + "*");
+			let newMessage = reaction.message.content.replace(regex, "*" + spoiler + "*");
 			
 			let embed = new Discord.RichEmbed()
 			.setColor(Colours.green)
-			.setAuthor(r.message.author.username, r.message.author.avatarURL)
+			.setAuthor(reaction.message.author.username, reaction.message.author.avatarURL)
 			.addField("🙈", newMessage)
-			.setFooter("Originally posted in #" + r.message.channel.name);
+			.setFooter("Originally posted in #" + reaction.message.channel.name);
 
-			u.send(embed).then(() => console.log("Spoiler sent! o7")).catch(console.error);
+			user.send(embed).then(() => console.log("Spoiler sent! o7")).catch(console.error);
 		}
 	}
 }
 
-function findSpoiler (s)
+function findSpoiler (string)
 {
 	let regex = /!spoiler\((.*)\)/g;
-	let result = regex.exec(s);
-
+	let result = regex.exec(string);
 	return result;
 }
 
-function rot13 (s) 
+function rot13 (string) 
 {
-	return s.replace(/[A-Za-z]/g, function (c)
+	return string.replace(/[A-Za-z]/g, function (c)
 	{
 	  return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".charAt(
 			 "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm".indexOf(c)
