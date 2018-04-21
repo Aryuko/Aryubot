@@ -3,7 +3,13 @@ const Colours =
 {
 	purple : "#ab6cfc",
 	green : "#1db954",
-	red : "#e01818"
+	red : "#e01818",
+	yellow : "#f2ee18"
+}
+
+const Config = 
+{
+	replyTimeout : 120
 }
 
 module.exports = 
@@ -58,24 +64,49 @@ function rot13 (s)
 
 function handleSpoiler (message)
 {
-	message.channel.send("Processing spoiler, waiting for a DM from the author...")
-				.then((botMessage) =>
+	let spoilerMessageEmbed = new Discord.RichEmbed()
+	.setColor(Colours.yellow)
+	.setAuthor(message.author.username, message.author.avatarURL)
+	.addField("Spoiler 🙈", "...")
+	.setFooter("Processing spoiler, waiting for a DM from the author...");
+
+	message.channel.send(spoilerMessageEmbed)
+				.then((spoilerMessage) =>
 				{
-					message.author.send("Reply to me with your spoiler and I'll format it for you o7")
+					let botInstructionEmbed = new Discord.RichEmbed()
+					.setColor(Colours.yellow)
+					.addField("Spoiler?", "Reply to me with your spoiler in clear text and I'll encode, format, and post it after your messsage in the original channel.")
+					.setFooter("You have " + Config.replyTimeout + " seconds to reply before I abort.");
+
+					message.author.send(botInstructionEmbed)
 					.then((botInstructionMessage) =>
 					{
-						message.author.dmChannel.awaitMessages(() => { return true; }, { max: 1, time: 60000, errors: ['time'] })
+						message.author.dmChannel.awaitMessages(() => { return true; }, { max: 1, time: Config.replyTimeout * 1000, errors: ['time'] })
 						.then((collected) =>
 						{
-							// console.log(collected.first().content);
-							message.author.send("Response collected o7");
+							let botConfirmationEmbed = new Discord.RichEmbed()
+							.setColor(Colours.green)
+							.addField("Success! 🎉", "Message has been posted to #" + message.channel.name);
+
+							botInstructionMessage.edit(botConfirmationEmbed);
 							
-							botMessage.edit(rot13(collected.first().content))
-							.then(botMessage.react("🙈"));
+							let spoilerMessageSuccessEmbed = new Discord.RichEmbed()
+							.setColor(Colours.green)
+							.setAuthor(message.author.username, message.author.avatarURL)
+							.addField("Spoiler 🙈", rot13(collected.first().content))
+							.setFooter("React using a 🙈 to recieve a translation of the spoiler.");
+
+							spoilerMessage.edit(spoilerMessageSuccessEmbed)
+							.then(spoilerMessage.react("🙈"));
 						})
 						.catch((error) =>
 						{
-							message.author.send("No response collected, aborting.");
+							let botAbortEmbed = new Discord.RichEmbed()
+							.setColor(Colours.red)
+							.addField("Aborted 😭", "No response recieved in the given time frame, please repeat the process whenever you have your message ready.")
+							.setFooter("Remember, you only have " + Config.replyTimeout + " seconds to reply before I abort.");
+
+							botInstructionMessage.edit(botAbortEmbed);
 						});
 					})
 					.catch(console.error);
