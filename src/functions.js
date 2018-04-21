@@ -29,24 +29,23 @@ module.exports =
 	{
 		if (user.id != clientId && reaction.me && reaction.emoji == "🙈")
 		{
-			let spoiler = rot13(findSpoiler(reaction.message.content)[1]);
-			let regex = /!spoiler\((.*)\)/g;
-			let newMessage = reaction.message.content.replace(regex, "*" + spoiler + "*");
+			let spoiler = rot13(reaction.message.embeds[0].fields[0].value);
+			let originalAuthor = reaction.message.embeds[0].author;
 			
 			let embed = new Discord.RichEmbed()
 			.setColor(Colours.green)
-			.setAuthor(reaction.message.author.username, reaction.message.author.avatarURL)
-			.addField("🙈", newMessage)
+			.setAuthor(originalAuthor.username, originalAuthor.avatarURL)
+			.addField("Spoiler 🙈", spoiler)
 			.setFooter("Originally posted in #" + reaction.message.channel.name);
 
-			user.send(embed).then(() => console.log("Spoiler sent! o7")).catch(console.error);
+			user.send(embed);
 		}
 	}
 }
 
 function findSpoiler (string)
 {
-	let regex = /!spoiler\((.*)\)/g;
+	let regex = /!spoiler/g;
 	let result = regex.exec(string);
 	return result;
 }
