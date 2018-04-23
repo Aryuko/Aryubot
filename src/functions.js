@@ -34,7 +34,7 @@ module.exports =
 			
 			let embed = new Discord.RichEmbed()
 			.setColor(Colours.green)
-			.setAuthor(originalAuthor.username, originalAuthor.avatarURL)
+			.setAuthor(originalAuthor.name, originalAuthor.iconURL)
 			.addField("Spoiler 🙈", spoiler)
 			.setFooter("Originally posted in #" + reaction.message.channel.name);
 
