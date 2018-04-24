@@ -29,13 +29,13 @@ module.exports =
 	{
 		if (user.id != clientId && reaction.me && reaction.emoji == "🙈")
 		{
-			let spoiler = rot13(reaction.message.embeds[0].fields[0].value);
+			let spoiler = rot13(reaction.message.embeds[0].description);
 			let originalAuthor = reaction.message.embeds[0].author;
 			
 			let embed = new Discord.RichEmbed()
 			.setColor(Colours.green)
 			.setAuthor(originalAuthor.name, originalAuthor.iconURL)
-			.addField("Spoiler 🙈", spoiler)
+			.setDescription(spoiler)
 			.setFooter("Originally posted in #" + reaction.message.channel.name);
 
 			user.send(embed);
@@ -65,7 +65,7 @@ function handleSpoiler (message)
 	let spoilerMessageEmbed = new Discord.RichEmbed()
 	.setColor(Colours.yellow)
 	.setAuthor(message.author.username, message.author.avatarURL)
-	.addField("Spoiler 🙈", "...")
+	.setDescription("...")
 	.setFooter("Processing spoiler, waiting for a DM from the author...");
 
 	message.channel.send(spoilerMessageEmbed)
@@ -91,7 +91,7 @@ function handleSpoiler (message)
 							let spoilerMessageSuccessEmbed = new Discord.RichEmbed()
 							.setColor(Colours.green)
 							.setAuthor(message.author.username, message.author.avatarURL)
-							.addField("Spoiler 🙈", rot13(collected.first().content))
+							.setDescription(rot13(collected.first().content))
 							.setFooter("React using a 🙈 to recieve a translation of the spoiler.");
 
 							spoilerMessage.edit(spoilerMessageSuccessEmbed)
