@@ -104,24 +104,33 @@ function handleSpoiler (message)
 						message.author.dmChannel.awaitMessages(() => { return true; }, { max: 1, time: Config.replyTimeout * 1000, errors: ['time'] })
 						.then((collected) =>
 						{
-							let botConfirmationEmbed = new Discord.RichEmbed()
-							.setColor(Colours.green)
-							.addField("Success! 🎉", "Message has been posted to #" + message.channel.name);
+							let response = collected.first().content;
+							if (response.length > 0) 
+							{
 
-							botInstructionMessage.edit(botConfirmationEmbed);
-							
-							let spoilerMessageSuccessEmbed = new Discord.RichEmbed()
-							.setColor(Colours.green)
-							.setAuthor(message.author.username, message.author.avatarURL)
-							.setDescription(rot13(collected.first().content))
-							.setFooter("React using a 🙈 to recieve a translation of the spoiler.");
-
-							spoilerMessage.edit(spoilerMessageSuccessEmbed)
-							.then(spoilerMessage.react("🙈"));
-						})
-						.catch((error) =>
-						{
-							let botAbortEmbed = new Discord.RichEmbed()
+								let botConfirmationEmbed = new Discord.RichEmbed()
+								.setColor(Colours.green)
+								.addField("Success! 🎉", "Message has been posted to #" + message.channel.name);
+								
+								botInstructionMessage.edit(botConfirmationEmbed);
+								
+								let spoilerMessageSuccessEmbed = new Discord.RichEmbed()
+								.setColor(Colours.green)
+								.setAuthor(message.author.username, message.author.avatarURL)
+								.setDescription(rot13(collected.first().content))
+								.setFooter("React using a 🙈 to recieve a translation of the spoiler.");
+								
+								spoilerMessage.edit(spoilerMessageSuccessEmbed)
+								.then(spoilerMessage.react("🙈"));
+								}
+							else
+							{
+								console.log("Empty response");
+							}
+							})
+							.catch((error) =>
+							{
+								let botAbortEmbed = new Discord.RichEmbed()
 							.setColor(Colours.red)
 							.addField("Aborted 😭", "No response recieved in the given time frame, please repeat the process whenever you have your message ready.")
 							.setFooter("Remember, you only have " + Config.replyTimeout + " seconds to reply before I abort.");
