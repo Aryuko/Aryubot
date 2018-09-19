@@ -19,17 +19,16 @@ module.exports =
 	{
 		if (!message.author.bot && message.content.length > 1)
 		{
-			// let words = message.content.split(" ");
-			var command = findCommand(message.content);
-			if(command)
+			var input = parseInput(message.content);
+			if(input)
 			{
-				switch (command)
+				switch (input.command)
 				{
 					case 'spoiler':
 						handleSpoiler(message);
 						break;
 					
-					/* Add a case for each new command */
+					// Add a case for each new command //
 
 					default:
 						break;
@@ -56,15 +55,21 @@ module.exports =
 }
 
 /**
- * Finds and returns the first command found in the given string, or false if none are found.
- * @param string	The found command or false if none is found 
+ * Parses input for commands and arguments and returns them.
+ * @param {string} string
+ * @return {array} An array containing a string 'command' and an array of arguments 'args'
  */
-function findCommand (string)
+function parseInput (string)
 {
-	let regex = new RegExp(Config.commandPrefix + '(\\w+)', 'g');	// Capture one single word following the specified prefix
+	let regex = new RegExp(Config.commandPrefix + '(\\w+)(.*)', 'g');	// Capture one single word following the specified prefix
 	let result = regex.exec(string);
-	if(result)	{ return result[1]; }
-	else		{ return false; }
+	if (result) {
+		return {
+			'args': args = result[0].slice(Config.commandPrefix.length).trim().split(/ +/g),
+			'command': command = args.shift().toLowerCase()
+		}
+	}
+	else { return false; } 
 }
 
 function rot13 (string) 
