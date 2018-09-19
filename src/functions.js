@@ -9,6 +9,7 @@ const Colours =
 
 const Config = 
 {
+	commandPrefix: '!',
 	replyTimeout : 120
 }
 
@@ -19,9 +20,20 @@ module.exports =
 		if (!message.author.bot && message.content.length > 1)
 		{
 			// let words = message.content.split(" ");
-			if(findSpoiler(message.content))
+			var command = findCommand(message.content);
+			if(command)
 			{
-				handleSpoiler(message);
+				switch (command)
+				{
+					case 'spoiler':
+						handleSpoiler(message);
+						break;
+					
+					/* Add a case for each new command */
+
+					default:
+						break;
+				}
 			}
 		}
 	},
@@ -43,11 +55,16 @@ module.exports =
 	}
 }
 
-function findSpoiler (string)
+/**
+ * Finds and returns the first command found in the given string, or false if none are found.
+ * @param string	The found command or false if none is found 
+ */
+function findCommand (string)
 {
-	let regex = /!spoiler/g;
+	let regex = new RegExp(Config.commandPrefix + '(\\w+)', 'g');	// Capture one single word following the specified prefix
 	let result = regex.exec(string);
-	return result;
+	if(result)	{ return result[1]; }
+	else		{ return false; }
 }
 
 function rot13 (string) 
