@@ -101,32 +101,23 @@ function handleSpoiler (message)
 					message.author.send(botInstructionEmbed)
 					.then((botInstructionMessage) =>
 					{
-						message.author.dmChannel.awaitMessages(() => { return true; }, { max: 1, time: Config.replyTimeout * 1000, errors: ['time'] })
+						message.author.dmChannel.awaitMessages((m) => { return m.content.length > 0; }, { max: 1, time: Config.replyTimeout * 1000, errors: ['time'] })
 						.then((collected) =>
 						{
-							let response = collected.first().content;
-							if (response.length > 0) 
-							{
-
-								let botConfirmationEmbed = new Discord.RichEmbed()
-								.setColor(Colours.green)
-								.addField("Success! 🎉", "Message has been posted to #" + message.channel.name);
-								
-								botInstructionMessage.edit(botConfirmationEmbed);
-								
-								let spoilerMessageSuccessEmbed = new Discord.RichEmbed()
-								.setColor(Colours.green)
-								.setAuthor(message.author.username, message.author.avatarURL)
-								.setDescription(rot13(collected.first().content))
-								.setFooter("React using a 🙈 to recieve a translation of the spoiler.");
-								
-								spoilerMessage.edit(spoilerMessageSuccessEmbed)
-								.then(spoilerMessage.react("🙈"));
-								}
-							else
-							{
-								console.log("Empty response");
-							}
+							let botConfirmationEmbed = new Discord.RichEmbed()
+							.setColor(Colours.green)
+							.addField("Success! 🎉", "Message has been posted to #" + message.channel.name);
+							
+							botInstructionMessage.edit(botConfirmationEmbed);
+							
+							let spoilerMessageSuccessEmbed = new Discord.RichEmbed()
+							.setColor(Colours.green)
+							.setAuthor(message.author.username, message.author.avatarURL)
+							.setDescription(rot13(collected.first().content))
+							.setFooter("React using a 🙈 to recieve a translation of the spoiler.");
+							
+							spoilerMessage.edit(spoilerMessageSuccessEmbed)
+							.then(spoilerMessage.react("🙈"));
 							})
 							.catch((error) =>
 							{
