@@ -9,8 +9,9 @@ const Colours =
 
 const Config = 
 {
-	commandPrefix: '!',
-	replyTimeout : 120
+	commandPrefix:	'!',
+	replyTimeout:	120,
+	spoilerEmoji:	'🙈'
 }
 
 module.exports = 
@@ -38,7 +39,7 @@ module.exports =
 	},
 	handleReaction : (reaction, user, clientId) =>
 	{
-		if (user.id != clientId && reaction.me && reaction.emoji == "🙈")
+		if (user.id != clientId && reaction.me && reaction.emoji == Config.spoilerEmoji)
 		{
 			let spoiler = rot13(reaction.message.embeds[0].description);
 			let originalAuthor = reaction.message.embeds[0].author;
@@ -115,10 +116,10 @@ function handleSpoiler (message)
 							.setColor(Colours.green)
 							.setAuthor(message.author.username, message.author.avatarURL, idUrl)
 							.setDescription(rot13(collected.first().content))
-							.setFooter("React using a 🙈 to recieve a translation of the spoiler.");
+							.setFooter("React using a " + Config.spoilerEmoji + " to recieve a translation of the spoiler.");
 							
 							spoilerMessage.edit(spoilerMessageSuccessEmbed)
-							.then(spoilerMessage.react("🙈"));
+							.then(spoilerMessage.react(Config.spoilerEmoji));
 							})
 							.catch((error) =>
 							{
