@@ -84,9 +84,10 @@ function rot13 (string)
 
 function handleSpoiler (message)
 {
+	let idUrl = "https://" + message.author.id + ".se/";
 	let spoilerMessageEmbed = new Discord.RichEmbed()
 	.setColor(Colours.yellow)
-	.setAuthor(message.author.username, message.author.avatarURL)
+	.setAuthor(message.author.username, message.author.avatarURL, idUrl)
 	.setDescription("...")
 	.setFooter("Processing spoiler, waiting for a DM from the author...");
 
@@ -112,7 +113,7 @@ function handleSpoiler (message)
 							
 							let spoilerMessageSuccessEmbed = new Discord.RichEmbed()
 							.setColor(Colours.green)
-							.setAuthor(message.author.username, message.author.avatarURL)
+							.setAuthor(message.author.username, message.author.avatarURL, idUrl)
 							.setDescription(rot13(collected.first().content))
 							.setFooter("React using a 🙈 to recieve a translation of the spoiler.");
 							
