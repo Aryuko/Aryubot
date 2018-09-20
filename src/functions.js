@@ -33,6 +33,10 @@ module.exports =
 						infoCommand(message, client);
 						break;
 
+					case 'test':
+						testCommand(message, input);
+						break;
+
 					// Add a case for each new command //
 
 					default:
@@ -165,4 +169,19 @@ function timeConversion(millisec)
 	else if (minutes < 60) { return minutes + " Min"; }
 	else if (hours < 24) { return hours + " Hrs"; }
 	else { return days + " Days" }
+}
+
+function testCommand(message, input)
+{
+	let argsString = "";
+	for (arg of input.args)
+	{
+		argsString += arg + " ";
+	}
+	if (argsString.length == 0) { argsString = "*(none)*"; }
+	let responseEmbed = new Discord.RichEmbed()
+	.setColor(Colours.purple)
+	.addField("Command", input.command)
+	.addField("Arguments", argsString);
+	message.channel.send(responseEmbed);
 }
