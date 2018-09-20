@@ -14,8 +14,8 @@ client.on("disconnected", () => {
 	process.exit(1);
 });
 
-client.on("message", (message) => Functions.handleMessage(message));
-client.on("messageReactionAdd", (reaction, user) => Functions.handleReaction(reaction, user, client.user.id));
+client.on("message", (message) => Functions.handleMessage(message, client));
+client.on("messageReactionAdd", (reaction, user) => Functions.handleReaction(reaction, user, client));
 
 /*
 	Following code allows message reaction events to also work on non-caches messages.

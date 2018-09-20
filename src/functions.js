@@ -16,7 +16,7 @@ const Config =
 
 module.exports = 
 {
-	handleMessage : (message) =>
+	handleMessage : (message, client) =>
 	{
 		if (!message.author.bot && message.content.length > 1)
 		{
@@ -26,9 +26,13 @@ module.exports =
 				switch (input.command)
 				{
 					case 'spoiler':
-						handleSpoiler(message);
+						spoilerCommand(message);
 						break;
 					
+					case 'info':
+						infoCommand(message, client.user);
+						break;
+
 					// Add a case for each new command //
 
 					default:
@@ -37,9 +41,9 @@ module.exports =
 			}
 		}
 	},
-	handleReaction : (reaction, user, clientId) =>
+	handleReaction : (reaction, user, client) =>
 	{
-		if (user.id != clientId && reaction.me && reaction.emoji == Config.spoilerEmoji)
+		if (user.id != client.user.id && reaction.me && reaction.emoji == Config.spoilerEmoji)
 		{
 			let spoiler = rot13(reaction.message.embeds[0].description);
 			let originalAuthor = reaction.message.embeds[0].author;
@@ -84,7 +88,7 @@ function rot13 (string)
 	});
 }
 
-function handleSpoiler (message)
+function spoilerCommand (message)
 {
 	let idUrl = "https://" + message.author.id + ".se/";
 	let spoilerMessageEmbed = new Discord.RichEmbed()
@@ -135,4 +139,16 @@ function handleSpoiler (message)
 		.catch(console.error);
 	})
 	.catch(console.error);
+}
+
+function infoCommand (message, clientUser)
+{
+	let responseEmbed = new Discord.RichEmbed()
+	.setColor(Colours.purple)
+	.setAuthor(clientUser.username, clientUser.avatarURL, "https://github.com/Aryuko/Aryubot")
+	.setDescription("Salutations! My name is Penny, and I'm here to help :D")
+	.addField("Development", "My development is currently a work in progress. If you want, you can view my code and contribute on [GitHub](https://github.com/Aryuko/Aryubot)!", true)
+	.addField("Version", "I'm not really sure which version I am, I haven't been programmed to know yet :(", true)
+	.addField("Author", "I'm being developed by someone called Aryu, you can find her at the links below!\n- [Reddit](https://www.reddit.com/user/Aryuko)\n- [Twitter](https://twitter.com/Aryuuko)\n- [Tumblr](http://pachimaryu.tumblr.com/)\n- [Steam](https://steamcommunity.com/id/Aryuuu/)");
+	message.channel.send(responseEmbed);
 }
