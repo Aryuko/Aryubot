@@ -30,7 +30,7 @@ module.exports =
 						break;
 					
 					case 'info':
-						infoCommand(message, client.user);
+						infoCommand(message, client);
 						break;
 
 					// Add a case for each new command //
@@ -141,14 +141,28 @@ function spoilerCommand (message)
 	.catch(console.error);
 }
 
-function infoCommand (message, clientUser)
+function infoCommand (message, client)
 {
 	let responseEmbed = new Discord.RichEmbed()
 	.setColor(Colours.purple)
-	.setAuthor(clientUser.username, clientUser.avatarURL, "https://github.com/Aryuko/Aryubot")
+	.setAuthor(client.user.username, client.user.avatarURL, "https://github.com/Aryuko/Aryubot")
 	.setDescription("Salutations! My name is Penny, and I'm here to help :D")
 	.addField("Development", "My development is currently a work in progress. If you want, you can view my code and contribute on [GitHub](https://github.com/Aryuko/Aryubot)!", true)
 	.addField("Version", "I'm not really sure which version I am, I haven't been programmed to know yet :(", true)
-	.addField("Author", "I'm being developed by someone called Aryu, you can find her at the links below!\n- [Reddit](https://www.reddit.com/user/Aryuko)\n- [Twitter](https://twitter.com/Aryuuko)\n- [Tumblr](http://pachimaryu.tumblr.com/)\n- [Steam](https://steamcommunity.com/id/Aryuuu/)");
+	.addField("Author", "I'm being developed by someone called Aryu, you can find her at the links below!\n- [Reddit](https://www.reddit.com/user/Aryuko)\n- [Twitter](https://twitter.com/Aryuuko)\n- [Tumblr](http://pachimaryu.tumblr.com/)\n- [Steam](https://steamcommunity.com/id/Aryuuu/)")
+	.setFooter("Current uptime: " + timeConversion(client.uptime));
 	message.channel.send(responseEmbed);
+}
+
+function timeConversion(millisec)
+{
+	var seconds = Math.floor(millisec / 1000);
+	var minutes = Math.floor(millisec / (1000 * 60));
+	var hours = Math.floor(millisec / (1000 * 60 * 60));
+	var days = Math.floor(millisec / (1000 * 60 * 60 * 24));
+
+	if (seconds < 60) {	return seconds + " Sec"; }
+	else if (minutes < 60) { return minutes + " Min"; }
+	else if (hours < 24) { return hours + " Hrs"; }
+	else { return days + " Days" }
 }
