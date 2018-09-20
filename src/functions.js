@@ -149,7 +149,7 @@ function infoCommand (message, client)
 	.setDescription("Salutations! My name is Penny, and I'm here to help :D")
 	.addField("Development", "My development is currently a work in progress. If you want, you can view my code and contribute on [GitHub](https://github.com/Aryuko/Aryubot)!", true)
 	.addField("Version", "I'm not really sure which version I am, I haven't been programmed to know yet :(", true)
-	.addField("Author", "I'm being developed by someone called Aryu, you can find her at the links below!\n- [Reddit](https://www.reddit.com/user/Aryuko)\n- [Twitter](https://twitter.com/Aryuuko)\n- [Tumblr](http://pachimaryu.tumblr.com/)\n- [Steam](https://steamcommunity.com/id/Aryuuu/)")
+	.addField("Author", "I'm being developed by someone called Aryu, you can find and contact her at the links below!\n[Reddit](https://www.reddit.com/user/Aryuko) | [Twitter](https://twitter.com/Aryuuko) | [Tumblr](http://pachimaryu.tumblr.com/) | [Steam](https://steamcommunity.com/id/Aryuuu/)")
 	.setFooter("Current uptime: " + timeConversion(client.uptime));
 	message.channel.send(responseEmbed);
 }
