@@ -1,4 +1,6 @@
 const Discord = require("discord.js");
+const Command = require("./Command.js");
+
 const Colours =
 {
 	purple : "#ab6cfc",
