@@ -1,20 +1,6 @@
-const Discord = require("discord.js");
-const Command = require("./Command.js");
-
-const Colours =
-{
-	purple : "#ab6cfc",
-	green : "#1db954",
-	red : "#e01818",
-	yellow : "#f2ee18"
-}
-
-const Config = 
-{
-	commandPrefix:	'!',
-	replyTimeout:	120,
-	spoilerEmoji:	'🙈'
-}
+const Discord 	= require("discord.js");
+const Command 	= require("./Command.js");
+const Config 	= require("../Config.json");
 
 module.exports = 
 {
@@ -55,7 +41,7 @@ module.exports =
 			let originalAuthor = reaction.message.embeds[0].author;
 			
 			let embed = new Discord.RichEmbed()
-			.setColor(Colours.green)
+			.setColor(Config.colours.green)
 			.setAuthor(originalAuthor.name, originalAuthor.iconURL)
 			.setDescription(spoiler)
 			.setFooter("Originally posted in #" + reaction.message.channel.name);
@@ -98,7 +84,7 @@ function spoilerCommand (message)
 {
 	let idUrl = "https://" + message.author.id + ".se/";
 	let spoilerMessageEmbed = new Discord.RichEmbed()
-	.setColor(Colours.yellow)
+	.setColor(Config.colours.yellow)
 	.setAuthor(message.author.username, message.author.avatarURL, idUrl)
 	.setDescription("...")
 	.setFooter("Processing spoiler, waiting for a DM from the author...");
@@ -107,7 +93,7 @@ function spoilerCommand (message)
 	.then((spoilerMessage) =>
 	{
 		let botInstructionEmbed = new Discord.RichEmbed()
-		.setColor(Colours.yellow)
+		.setColor(Config.colours.yellow)
 		.addField("Spoiler?", "Reply to me with your spoiler in clear text and I'll encode, format, and post it after your messsage in the original channel.")
 		.setFooter("You have " + Config.replyTimeout + " seconds to reply before I abort.");
 
@@ -118,13 +104,13 @@ function spoilerCommand (message)
 			.then((collected) =>
 			{
 				let botConfirmationEmbed = new Discord.RichEmbed()
-				.setColor(Colours.green)
+				.setColor(Config.colours.green)
 				.addField("Success! 🎉", "Message has been posted to #" + message.channel.name);
 				
 				botInstructionMessage.edit(botConfirmationEmbed);
 				
 				let spoilerMessageSuccessEmbed = new Discord.RichEmbed()
-				.setColor(Colours.green)
+				.setColor(Config.colours.green)
 				.setAuthor(message.author.username, message.author.avatarURL, idUrl)
 				.setDescription(rot13(collected.first().content))
 				.setFooter("React using a " + Config.spoilerEmoji + " to recieve a translation of the spoiler.");
@@ -135,7 +121,7 @@ function spoilerCommand (message)
 				.catch((error) =>
 				{
 					let botAbortEmbed = new Discord.RichEmbed()
-				.setColor(Colours.red)
+				.setColor(Config.colours.red)
 				.addField("Aborted 😭", "No response recieved in the given time frame, please repeat the process whenever you have your message ready.")
 				.setFooter("Remember, you only have " + Config.replyTimeout + " seconds to reply before I abort.");
 
@@ -150,7 +136,7 @@ function spoilerCommand (message)
 function infoCommand (message, client)
 {
 	let responseEmbed = new Discord.RichEmbed()
-	.setColor(Colours.purple)
+	.setColor(Config.colours.purple)
 	.setAuthor(client.user.username, client.user.avatarURL, "https://github.com/Aryuko/Aryubot")
 	.setDescription("Salutations! My name is Penny, and I'm here to help :D")
 	.addField("Development", "My development is currently a work in progress. If you want, you can view my code and contribute on [GitHub](https://github.com/Aryuko/Aryubot)!", true)
@@ -182,7 +168,7 @@ function testCommand(message, input)
 	}
 	if (argsString.length == 0) { argsString = "*(none)*"; }
 	let responseEmbed = new Discord.RichEmbed()
-	.setColor(Colours.purple)
+	.setColor(Config.colours.purple)
 	.addField("Command", input.command)
 	.addField("Arguments", argsString);
 	message.channel.send(responseEmbed);
