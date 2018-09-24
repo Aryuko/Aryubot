@@ -6,7 +6,7 @@ let client = new Discord.Client();
 client.login(Credentials.token);
 
 client.once("ready", () => {
-	console.log("Aryubot reporting for duty o7 currently serving", client.guilds.size, "servers and " + client.users.size + " users!");
+	console.log("Penny is combat ready o7! Currently serving", client.guilds.size, "servers and " + client.users.size + " users.");
 });
 
 client.on("disconnected", () => {
