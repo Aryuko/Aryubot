@@ -19,7 +19,7 @@ loadFiles("./src/commands").then((result) => {
 	{
 		if(client.Commands['exampleCommand'].method())
 		{ 
-			console.log("Finished loading " + result.count + " commands.");
+			console.log("Successfully loaded " + result.count + " commands. Use " + Config.commandPrefix + "commandlist to see all.");
 		}
 	} else
 	{
