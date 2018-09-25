@@ -11,8 +11,9 @@ module.exports = new Command (
 
 		let responseEmbed = new client.Discord.RichEmbed()
 		.setColor(client.Config.colours.green)
-		.addField("Commands", commandList);
-
+		.setTitle("Commands")
+		.setDescription(commandList)
+		.setFooter("Use " + client.Config.commandPrefix + "help <command> to find out more about the commands");
 		message.channel.send(responseEmbed);
 	},
 	[],

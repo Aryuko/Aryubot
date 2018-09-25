@@ -15,7 +15,7 @@ module.exports = new Command (
         message.channel.send(responseEmbed);
     },
     [],
-    "An example command that shows how to build commands.",
+    "A command that shows some info about the bot and its author.",
     "info",
     []
 );

@@ -55,7 +55,7 @@ module.exports = new Command (
         .catch(console.error);
     },
     [],
-    "A command that lets you enode spoilers to be able to post them in chat, and let users react to the bot message to recieve a deciphered and readable version",
+    "A command that lets you encode spoilers to be able to post them in chat, and let users react to the bot message to recieve a deciphered and readable version",
     "spoiler",
     []
 );
