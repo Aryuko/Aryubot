@@ -10,7 +10,7 @@ module.exports = new Command (
 		.setColor(client.Config.colours.green)
 		.setTitle(client.Config.commandPrefix + command.commandName)
 		.addField("Description", command.description)
-		.addField("Syntax", command.syntax)
+		.addField("Syntax", "``" + command.syntax + "``");
 		message.channel.send(responseEmbed);
 	},
 	[],
