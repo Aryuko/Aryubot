@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 var Functions = require("./functions.js");
 const Credentials = require("../credentials.json");
+const loadFiles = require("./functions/loadFiles.js");
 
 let client = new Discord.Client();
 client.login(Credentials.token);

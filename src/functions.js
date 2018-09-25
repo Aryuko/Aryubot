@@ -1,6 +1,6 @@
 const Discord 	= require("discord.js");
-const Command 	= require("./Command.js");
 const Config 	= require("../Config.json");
+const Command 	= require("./Command.js");
 
 module.exports = 
 {
