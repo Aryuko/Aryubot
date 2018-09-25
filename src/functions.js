@@ -1,4 +1,3 @@
-const Discord 	= require("discord.js");
 const Config 	= require("../Config.json");
 
 module.exports = 
@@ -24,7 +23,7 @@ module.exports =
 			let spoiler = rot13(reaction.message.embeds[0].description);
 			let originalAuthor = reaction.message.embeds[0].author;
 			
-			let embed = new Discord.RichEmbed()
+			let embed = new client.Discord.RichEmbed()
 			.setColor(Config.colours.green)
 			.setAuthor(originalAuthor.name, originalAuthor.iconURL)
 			.setDescription(spoiler)
