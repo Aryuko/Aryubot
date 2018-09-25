@@ -1,4 +1,4 @@
-const Command 	= require("../Command.js");
+const Command = require("../Command.js");
 
 module.exports = new Command (
 	"help",

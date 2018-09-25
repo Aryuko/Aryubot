@@ -1,8 +1,8 @@
-const Discord = require("discord.js");
-const Config 	= require("../Config.json");
-const Functions = require("./functions.js");
-const Credentials = require("../credentials.json");
-const loadFiles = require("./loadFiles.js");
+const Discord		= require("discord.js");
+const Config		= require("../Config.json");
+const Functions		= require("./functions.js");
+const Credentials	= require("../credentials.json");
+const loadFiles		= require("./loadFiles.js");
 
 let client = new Discord.Client();
 

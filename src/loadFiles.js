@@ -1,5 +1,5 @@
-const fs = require("fs-extra-promise");
-const path = require("path");
+const fs    = require("fs-extra-promise");
+const path  = require("path");
 
 /**
  * Loads all js files in the given directory and returns an array of the loaded files.

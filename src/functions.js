@@ -1,4 +1,4 @@
-const Config 	= require("../Config.json");
+const Config = require("../Config.json");
 
 module.exports = 
 {
