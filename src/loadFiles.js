@@ -4,7 +4,9 @@ const path = require("path");
 /**
  * Loads all js files in the given directory and returns an array of the loaded files.
  * @param {String} dir
- * @returns An array of all loaded files 
+ * @returns An object containing:
+ *          requires:   An array of all loaded files 
+ *          count:      The number of loaded files
  */
 module.exports = 
     (dir) => new Promise((resolve, reject) => 
@@ -32,7 +34,7 @@ module.exports =
                         count++;
                     }
                 } catch (e) { console.error(e); }
-                resolve(requires);
+                resolve({requires, count});
             }).catch(e => console.error(e));
         }).catch(e => console.error(e));
     }

@@ -1,9 +1,20 @@
 const Discord = require("discord.js");
 var Functions = require("./functions.js");
 const Credentials = require("../credentials.json");
-const loadFiles = require("./functions/loadFiles.js");
+const loadFiles = require("./loadFiles.js");
 
 let client = new Discord.Client();
+
+/* Load commands here */ 
+console.log("Loading commands...");
+loadFiles("./src/commands").then((result) => {
+    client.commands = result.requires;
+	console.log("Finished loading " + result.count + " commands.");
+    if (client.commands.hasOwnProperty("exampleCommand")) {
+        client.commands['exampleCommand'].method();
+	} 
+});
+
 client.login(Credentials.token);
 
 client.once("ready", () => {
