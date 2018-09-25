@@ -21,8 +21,8 @@ loadFiles("./src/commands").then((result) => {
 		{ 
 			console.log("Finished loading " + result.count + " commands.");
 		}
-	} 
-	else {
+	} else
+	{
 		console.log("Something went wrong when loading commands");
 	}
 });
