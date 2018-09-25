@@ -1,10 +1,8 @@
-const Discord 	= require("discord.js");
-const Config 	= require("../../Config.json");
 const Command 	= require("../Command.js");
 
 module.exports = new Command (
     "test",
-    (message, input) => 
+    (message, input, client) => 
     {
         let argsString = "";
         for (arg of input.args)
@@ -12,8 +10,8 @@ module.exports = new Command (
             argsString += arg + " ";
         }
         if (argsString.length == 0) { argsString = "*(none)*"; }
-        let responseEmbed = new Discord.RichEmbed()
-        .setColor(Config.colours.purple)
+        let responseEmbed = new client.Discord.RichEmbed()
+        .setColor(client.Config.colours.purple)
         .addField("Command", input.command)
         .addField("Arguments", argsString);
         message.channel.send(responseEmbed);

@@ -1,18 +1,30 @@
 const Discord = require("discord.js");
-var Functions = require("./functions.js");
+const Config 	= require("../Config.json");
+const Functions = require("./functions.js");
 const Credentials = require("../credentials.json");
 const loadFiles = require("./loadFiles.js");
 
 let client = new Discord.Client();
 
-/* Load commands here */ 
+/* Extend client with Discord and Config */
+client.Config = Config;
+client.Discord = Discord;
+
+/* Load commands */ 
 console.log("Loading commands...");
 loadFiles("./src/commands").then((result) => {
-    client.commands = result.requires;
-	console.log("Finished loading " + result.count + " commands.");
-    if (client.commands.hasOwnProperty("exampleCommand")) {
-        client.commands['exampleCommand'].method();
+	/* Extend client with commands */
+    client.Commands = result.requires;
+	if (client.Commands.hasOwnProperty("exampleCommand"))
+	{
+		if(client.Commands['exampleCommand'].method())
+		{ 
+			console.log("Finished loading " + result.count + " commands.");
+		}
 	} 
+	else {
+		console.log("Something went wrong when loading commands");
+	}
 });
 
 client.login(Credentials.token);
