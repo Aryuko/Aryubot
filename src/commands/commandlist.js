@@ -6,7 +6,7 @@ module.exports = new Command (
 	{
 		let commandList =  "";
 		for (command in client.Commands) {
-			commandList += client.Config.commandPrefix + command + "\n";
+			commandList += "• " + client.Config.commandPrefix + command + "\n";
 		}
 
 		let responseEmbed = new client.Discord.RichEmbed()
