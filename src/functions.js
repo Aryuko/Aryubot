@@ -41,7 +41,7 @@ module.exports =
  */
 function parseInput (string)
 {
-	let regex = new RegExp(Config.commandPrefix + '(\\w+)(.*)', 'g');	// Capture one single word following the specified prefix
+	let regex = new RegExp("\\" + Config.commandPrefix + '(\\w+)(.*)', 'g');	// Capture one single word following the specified prefix
 	let result = regex.exec(string);
 	if (result) 
 	{
