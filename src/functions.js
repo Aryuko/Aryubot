@@ -7,12 +7,9 @@ module.exports =
 		if (!message.author.bot && message.content.length > 1)
 		{
 			var input = parseInput(message.content);
-			if(input)
+			if(input && client.Commands.hasOwnProperty(input.command))
 			{
-				if(client.Commands.hasOwnProperty(input.command))
-				{
-					client.Commands[input.command].method(message, input, client);
-				}
+				client.Commands[input.command].method(message, input, client);
 			}
 		}
 	},
