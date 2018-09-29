@@ -38,11 +38,11 @@ module.exports =
  */
 function parseInput (string)
 {
-	let regex = new RegExp("\\" + Config.commandPrefix + '(\\w+)(.*)', 'g');	// Capture one single word following the specified prefix
+	let regex = new RegExp("\\" + Config.commandPrefix + '(\\w+)(.*)', 'g');		// Capture one single word following the specified prefix
 	let result = regex.exec(string);
 	if (result) 
 	{
-		let args = result[2].trim().match(/(?:[^\s"']+|["'][^"]*["'])+/g);
+		let args = result[2].trim().match(/(?:[^\s"']+|["'][^"']*["'])+/g);			// https://stackoverflow.com/a/16261693/5621850
 		for (index in args) { args[index] = args[index].replace(/["']/g, ''); }
 		return {
 			'command': command = result[1].toLowerCase(),
