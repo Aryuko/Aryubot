@@ -42,9 +42,11 @@ function parseInput (string)
 	let result = regex.exec(string);
 	if (result) 
 	{
+		let args = result[2].trim().match(/(?:[^\s"']+|["'][^"]*["'])+/g);
+		for (index in args) { args[index] = args[index].replace(/["']/g, ''); }
 		return {
-			'args': args = result[0].slice(Config.commandPrefix.length).trim().split(/ +/g),
-			'command': command = args.shift().toLowerCase()
+			'command': command = result[1].toLowerCase(),
+			'args': args = args
 		}
 	}
 	else { return false; } 

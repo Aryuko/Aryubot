@@ -7,7 +7,7 @@ module.exports = new Command (
         let argsString = "";
         for (arg of input.args)
         {
-            argsString += arg + " ";
+            argsString += arg + "\n";
         }
         if (argsString.length == 0) { argsString = "*(none)*"; }
         let responseEmbed = new client.Discord.RichEmbed()
