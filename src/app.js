@@ -6,9 +6,18 @@ const loadFiles		= require("./loadFiles.js");
 
 let client = new Discord.Client();
 
-/* Extend client with Discord and Config */
+/* Extend client with Discord, Config, and Variables */
 client.Config = Config;
 client.Discord = Discord;
+client.Variables = 
+{
+	"timer" : 
+	{
+		"registered" : false,
+		"name" : false,
+		"time" : false
+	}
+};
 
 /* Load commands */ 
 console.log("Loading commands...");
