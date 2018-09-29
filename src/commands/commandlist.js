@@ -16,7 +16,7 @@ module.exports = new Command (
 		.setFooter("Use " + client.Config.commandPrefix + "help <command> to find out more about the commands");
 		message.channel.send(responseEmbed);
 	},
-	[],
+	["commands"],
 	"Lists all available commands.",
 	"commandlist",
 	[]
