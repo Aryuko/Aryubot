@@ -15,7 +15,8 @@ client.Variables =
 	{
 		"registered" : false,
 		"name" : false,
-		"time" : false
+		"time" : false,
+		"intervalObject" : false
 	}
 };
 

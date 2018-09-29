@@ -20,15 +20,15 @@ module.exports = new Command (
     []
 );
 
-function timeConversion(millisec)
+function timeConversion (millisec)
 {
 	var seconds = Math.floor(millisec / 1000);
 	var minutes = Math.floor(millisec / (1000 * 60));
 	var hours = Math.floor(millisec / (1000 * 60 * 60));
 	var days = Math.floor(millisec / (1000 * 60 * 60 * 24));
 
-	if (seconds < 60) {	return seconds + " Sec"; }
-	else if (minutes < 60) { return minutes + " Min"; }
-	else if (hours < 24) { return hours + " Hrs"; }
-	else { return days + " Days" }
+	if (seconds < 60) {	return seconds + " seconds"; }
+	else if (minutes < 60) { return minutes + " minutes"; }
+	else if (hours < 24) { return hours + " hours"; }
+	else { return days + " days" }
 }
