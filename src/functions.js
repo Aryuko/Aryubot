@@ -7,7 +7,7 @@ module.exports =
 		if (!message.author.bot && message.content.length > 1)
 		{
 			var input = parseInput(message.content);
-			if(input && client.Commands.hasOwnProperty(input.command))
+			if(input && client.Commands.hasOwnProperty(input.command) && client.Commands[input.command].config["enabled"])
 			{
 				client.Commands[input.command].method(message, input, client);
 			}

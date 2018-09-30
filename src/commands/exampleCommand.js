@@ -9,5 +9,8 @@ module.exports = new Command (
 	[],
 	"An example command that shows how to build commands.",
 	"examplecommand",
-	[]
+    {
+        "enabled" : true,
+        "permissionGroup" : false
+    }
 );

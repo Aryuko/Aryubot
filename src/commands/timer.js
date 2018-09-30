@@ -94,7 +94,10 @@ module.exports = new Command (
 	[],
 	"Sets the bot status to a timer showing how long is left until the given event",
 	"timer <action> <name of event> <time of event>",
-	[]
+    {
+        "enabled" : true,
+        "permissionGroup" : false
+    }
 );
 // ex: !timer set "test" "2018 Oct 29 22:40"
 

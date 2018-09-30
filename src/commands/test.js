@@ -23,5 +23,8 @@ module.exports = new Command (
     [],
     "A test command used to see if arguments work properly.",
     "test [arg1], [arg2], [arg3]..",
-    []
+    {
+        "enabled" : true,
+        "permissionGroup" : false
+    }
 );

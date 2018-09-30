@@ -26,5 +26,8 @@ module.exports = new Command (
 	[],
 	"Helps by providing information about a given command.",
 	"help <command>",
-	[]
+    {
+        "enabled" : true,
+        "permissionGroup" : false
+    }
 );

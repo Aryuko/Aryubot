@@ -8,5 +8,13 @@
 		"green"		: "#1db954",
 		"red"		: "#e01818",
 		"yellow"	: "#f2ee18"
+	},
+	"permissionGroups" :
+	{
+		"Aryu" : 
+		{
+			"roles" : [],
+			"users" : ["106109569486315520"]
+		}
 	}
 }

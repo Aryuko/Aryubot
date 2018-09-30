@@ -17,7 +17,10 @@ module.exports = new Command (
     [],
     "A command that shows some info about the bot and its author.",
     "info",
-    []
+    {
+        "enabled" : true,
+        "permissionGroup" : false
+    }
 );
 
 function timeConversion (millisec)

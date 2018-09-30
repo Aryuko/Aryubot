@@ -22,5 +22,8 @@ module.exports = new Command (
     [],
     "Returns all current set variables",
     "variables",
-    []
+    {
+        "enabled" : true,
+        "permissionGroup" : false
+    }
 );
