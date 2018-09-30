@@ -7,7 +7,7 @@ module.exports =
 		if (!message.author.bot && message.content.length > 1)
 		{
 			var input = parseInput(message.content);
-			if(input && client.Commands.hasOwnProperty(input.command) && client.Commands[input.command].config["enabled"])
+			if(input && client.Commands.hasOwnProperty(input.command) && client.Commands[input.command].config["enabled"] && permitted(message.author, client.Commands[input.command]))
 			{
 				client.Commands[input.command].method(message, input, client);
 			}
@@ -50,6 +50,24 @@ function parseInput (string)
 		}
 	}
 	else { return false; } 
+}
+
+/**
+ * @param {User}	user 
+ * @param {Command}	command 
+ * @return			True if user has permission to use the given command, False if not
+ */
+function permitted (user, command)
+{
+	if (!command.config.permissionGroup)
+	{ 
+		return true;
+	}
+	else 
+	{
+		let permissionGroup = Config.permissionGroups[command.config.permissionGroup];
+		return permissionGroup.users.includes(user.id);
+	}
 }
 
 function rot13 (string) 
