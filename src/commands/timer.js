@@ -4,6 +4,7 @@ module.exports = new Command (
 	"timer",
 	(message, input, client) => 
 	{
+		let responseEmbed = new client.Discord.RichEmbed();
 		if (input.args)
 		{
 			let mode = input.args[0];
@@ -29,16 +30,14 @@ module.exports = new Command (
 						client.Variables.timer.time				= time;
 						updateStatus(name, time, client);
 
-						let responseEmbed = new client.Discord.RichEmbed()
-						.setColor(client.Config.colours.green)
+						responseEmbed.setColor(client.Config.colours.green)
 						.setTitle("Timer set")
 						.setDescription("'" + name + "' set for " + time);
 						message.channel.send(responseEmbed);
 		
 					} else // Incorrectly formatted time //
 					{
-						let responseEmbed = new client.Discord.RichEmbed()
-						.setColor(client.Config.colours.red)
+						responseEmbed.setColor(client.Config.colours.red)
 						.setTitle("Incorrect input")
 						.setDescription("Incorrectly formatted time");
 						message.channel.send(responseEmbed);
@@ -50,17 +49,22 @@ module.exports = new Command (
 					if(client.Variables.timer.intervalObject)
 					{
 						clearInterval(client.Variables.timer.intervalObject);
-						client.Variables.timer.intervalObject	= false;
-						client.Variables.timer.registered		= false;
-						client.Variables.timer.name				= false;
-						client.Variables.timer.time				= false;
+						client.Variables.timer.intervalObject = false;
 					}
+					client.Variables.timer.registered		= false;
+					client.Variables.timer.name				= false;
+					client.Variables.timer.time				= false;
 					client.user.setPresence({ status: 'online', game: null});
+					
+					responseEmbed.setColor(client.Config.colours.green)
+					.setTitle("Timer unset")
+					.setDescription("The timer has now been unset");
+					message.channel.send(responseEmbed);
+
 					break;
 
 				default: // Incorrect action argument //
-					let responseEmbed = new client.Discord.RichEmbed()
-					.setColor(client.Config.colours.red)
+					responseEmbed.setColor(client.Config.colours.red)
 					.setTitle("Incorrect input")
 					.setDescription("Incorrect arguments, please use either ``set`` or ``unset`` as the second argument, or omit all arguments");
 					message.channel.send(responseEmbed);
@@ -68,8 +72,7 @@ module.exports = new Command (
 			}
 		} else // No arguments set //
 		{
-			let responseEmbed = new client.Discord.RichEmbed()
-			.setColor(client.Config.colours.green)
+			responseEmbed.setColor(client.Config.colours.green)
 			.setTitle("Current timer");
 			if(client.Variables.timer.registered)
 			{
