@@ -13,7 +13,7 @@ module.exports = new Command (
 					let name = input.args[1];
 					let time = new Date(input.args[2]);
 					if(time.getHours()) 
-					{						
+					{
 						if(client.Variables.timer.intervalObject)
 						{
 							clearInterval(client.Variables.timer.intervalObject);
@@ -28,10 +28,20 @@ module.exports = new Command (
 						client.Variables.timer.name				= name;
 						client.Variables.timer.time				= time;
 						updateStatus(name, time, client);
+
+						let responseEmbed = new client.Discord.RichEmbed()
+						.setColor(client.Config.colours.green)
+						.setTitle("Timer set")
+						.setDescription("'" + name + "' set for " + time);
+						message.channel.send(responseEmbed);
 		
-					} else
+					} else // Incorrectly formatted time //
 					{
-						console.log("Incorrectly formatted time");
+						let responseEmbed = new client.Discord.RichEmbed()
+						.setColor(client.Config.colours.red)
+						.setTitle("Incorrect input")
+						.setDescription("Incorrectly formatted time");
+						message.channel.send(responseEmbed);
 					}
 					break;
 
@@ -48,19 +58,39 @@ module.exports = new Command (
 					client.user.setPresence({ status: 'online', game: null});
 					break;
 
-				default:
-					console.log("Incorrect input");
+				default: // Incorrect action argument //
+					let responseEmbed = new client.Discord.RichEmbed()
+					.setColor(client.Config.colours.red)
+					.setTitle("Incorrect input")
+					.setDescription("Incorrect arguments, please use either ``set`` or ``unset`` as the second argument, or omit all arguments");
+					message.channel.send(responseEmbed);
 					break;
 			}
-		} else
+		} else // No arguments set //
 		{
-			// change to show current timer //
-			console.log("Incorrect input");
+			let responseEmbed = new client.Discord.RichEmbed()
+			.setColor(client.Config.colours.green)
+			.setTitle("Current timer");
+			if(client.Variables.timer.registered)
+			{
+				let difference = client.Variables.timer.time - Date.now();
+				if (difference > 0)
+				{
+					let timeString = timeConversion(difference);
+					responseEmbed.setDescription(client.Variables.timer.name + ": in " + timeString);
+				} else 
+				{
+					responseEmbed.setDescription(client.Variables.timer.name + ": right now");
+				}
+			}
+			else { responseEmbed.setDescription("No timer set"); }
+			
+			message.channel.send(responseEmbed);
 		}
 	},
 	[],
 	"Sets the bot status to a timer showing how long is left until the given event",
-	"timer set <name of event> <time of event>",
+	"timer <action> <name of event> <time of event>",
 	[]
 );
 // ex: !timer set "test" "2018 Oct 29 22:40"
