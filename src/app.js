@@ -22,7 +22,8 @@ client.Variables =
 
 /* Load commands */ 
 console.log("Loading commands...");
-loadFiles("./src/commands").then((result) => {
+loadFiles("./src/commands").then((result) =>
+{
 	/* Extend client with commands */
     client.Commands = result.requires;
 	if (client.Commands.hasOwnProperty("exampleCommand"))
@@ -39,11 +40,13 @@ loadFiles("./src/commands").then((result) => {
 
 client.login(Credentials.token);
 
-client.once("ready", () => {
+client.once("ready", () =>
+{
 	console.log("Penny is combat ready o7! Currently serving", client.guilds.size, "servers and " + client.users.size + " users.");
 });
 
-client.on("disconnected", () => {
+client.on("disconnected", () =>
+{
 	console.log("Client disconnected");
 	process.exit(1);
 });
