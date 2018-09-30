@@ -4,7 +4,7 @@ module.exports = new Command (
 	"help",
 	(message, input, client) => 
 	{
-		if (input.args.length > 0)
+		if (input.args)
 		{
 			let command = client.Commands[input.args[0]];
 			
@@ -19,7 +19,7 @@ module.exports = new Command (
 			let responseEmbed = new client.Discord.RichEmbed()
 			.setColor(client.Config.colours.red)
 			.setTitle("Error")
-			.setDescription("Invalid supplied arguments, please follow the following syntax:\n``" + client.Config.commandPrefix + client.Commands['help'].syntax + "``");
+			.setDescription("Invalid arguments, please follow the following syntax:\n``" + client.Config.commandPrefix + client.Commands['help'].syntax + "``");
 			message.channel.send(responseEmbed);
 		}
 	},
