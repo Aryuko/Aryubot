@@ -4,10 +4,10 @@ module.exports =
 {
 	handleMessage : (message, client) =>
 	{
-		if (!message.author.bot && message.content.length > 1)
+		if (!message.author.bot && message.content.length > 1 && message.guild) // TODO: Add support for DM commands //
 		{
 			var input = parseInput(message.content);
-			if(input && client.Commands.hasOwnProperty(input.command) && client.Commands[input.command].config["enabled"] && permitted(message.author, client.Commands[input.command]))
+			if(input && client.Commands.hasOwnProperty(input.command) && client.Commands[input.command].config["enabled"] && permitted(message.member, client.Commands[input.command]))
 			{
 				client.Commands[input.command].method(message, input, client);
 			}
@@ -53,21 +53,26 @@ function parseInput (string)
 }
 
 /**
- * @param {User}	user 
+ * @param {Member}	member 
  * @param {Command}	command 
  * @return			True if user has permission to use the given command, False if not
  */
-function permitted (user, command)
+function permitted (member, command)
 {
-	if (!command.config.permissionGroup)
-	{ 
-		return true;
-	}
-	else 
+	if (!command.config.permissionGroup) { return true; }						// Permission group isn't set //
+	else																		// Permission group is set //
 	{
 		let permissionGroup = Config.permissionGroups[command.config.permissionGroup];
-		return permissionGroup.users.includes(user.id);
+		if (permissionGroup.users.includes(member.id)) { return true; }			// User is included in user list //
+		else
+		{
+			for(role of permissionGroup.roles)
+			{
+				if (member.roles.keyArray().includes(role))	{ return true; }	// Any of the user's roles are in the role list // 
+			}
+		}
 	}
+	return false;
 }
 
 function rot13 (string) 
