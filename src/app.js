@@ -1,15 +1,52 @@
-const Discord = require("discord.js");
-var Functions = require("./functions.js");
-const Credentials = require("../credentials.json");
+const Discord		= require("discord.js");
+const Config		= require("../Config.json");
+const Functions		= require("./functions.js");
+const Credentials	= require("../credentials.json");
+const loadFiles		= require("./loadFiles.js");
 
 let client = new Discord.Client();
-client.login(Credentials.token);
 
-client.once("ready", () => {
-	console.log("Aryubot reporting for duty o7 currently serving", client.guilds.size, "servers and " + client.users.size + " users!");
+/* Extend client with Discord, Config, and Variables */
+client.Config = Config;
+client.Discord = Discord;
+client.Variables = 
+{
+	"timer" : 
+	{
+		"registered" : false,
+		"name" : false,
+		"time" : false,
+		"intervalObject" : false
+	}
+};
+
+/* Load commands */ 
+console.log("Loading commands...");
+loadFiles("./src/commands").then((result) =>
+{
+	/* Extend client with commands */
+    client.Commands = result.requires;
+	if (client.Commands.hasOwnProperty("exampleCommand"))
+	{
+		if(client.Commands['exampleCommand'].method())
+		{ 
+			console.log("Successfully loaded " + result.count + " commands. Use " + Config.commandPrefix + "commandlist to see all.");
+		}
+	} else
+	{
+		console.log("Something went wrong when loading commands");
+	}
 });
 
-client.on("disconnected", () => {
+client.login(Credentials.token);
+
+client.once("ready", () =>
+{
+	console.log("Penny is combat ready o7! Currently serving", client.guilds.size, "servers and " + client.users.size + " users.");
+});
+
+client.on("disconnected", () =>
+{
 	console.log("Client disconnected");
 	process.exit(1);
 });
