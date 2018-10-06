@@ -1,4 +1,4 @@
-const Config = require("../Config.json");
+const Config = require("../config/Config.Default.json");
 
 module.exports = 
 {
@@ -7,7 +7,7 @@ module.exports =
 		if (!message.author.bot && message.content.length > 1 && message.guild) // TODO: Add support for DM commands //
 		{
 			var input = parseInput(message.content);
-			if(input && client.Commands.hasOwnProperty(input.command) && client.Commands[input.command].config["enabled"] && permitted(message.member, client.Commands[input.command]))
+			if(input && client.Commands.hasOwnProperty(input.command) && Config.commands[input.command].enabled && permitted(message.member, client.Commands[input.command]))
 			{
 				client.Commands[input.command].method(message, input, client);
 			}
@@ -38,11 +38,11 @@ module.exports =
  */
 function parseInput (string)
 {
-	let regex = new RegExp("\\" + Config.commandPrefix + '(\\w+)(.*)', 'g');		// Capture one single word following the specified prefix
+	let regex = new RegExp("\\" + Config.commandPrefix + '(\\w+)(.*)', 'g');	// Capture one single word following the specified prefix
 	let result = regex.exec(string);
 	if (result) 
 	{
-		let args = result[2].trim().match(/(?:[^\s"']+|["'][^"']*["'])+/g);			// https://stackoverflow.com/a/16261693/5621850
+		let args = result[2].trim().match(/(?:[^\s"']+|["'][^"']*["'])+/g);		// https://stackoverflow.com/a/16261693/5621850
 		for (index in args) { args[index] = args[index].replace(/["']/g, ''); }
 		return {
 			'command': command = result[1].toLowerCase(),
@@ -59,14 +59,14 @@ function parseInput (string)
  */
 function permitted (member, command)
 {
-	if (!command.config.permissionGroup) { return true; }						// Permission group isn't set //
+	if (!Config.commands[command.name].permissionGroup) { return true; }		// Permission group isn't set //
 	else																		// Permission group is set //
 	{
-		let permissionGroup = Config.permissionGroups[command.config.permissionGroup];
+		let permissionGroup = Config.permissionGroups[Config.commands[command.name].permissionGroup];
 		if (permissionGroup.users.includes(member.id)) { return true; }			// User is included in user list //
 		else
 		{
-			for(role of permissionGroup.roles)
+			for (role of permissionGroup.roles)
 			{
 				if (member.roles.keyArray().includes(role))	{ return true; }	// Any of the user's roles are in the role list // 
 			}

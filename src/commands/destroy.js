@@ -9,9 +9,5 @@ module.exports = new Command (
 	},
 	[],
 	"Logs out, terminates the connection to Discord, and destroys the client.",
-	"destroy",
-    {
-        "enabled" : true,
-        "permissionGroup" : false
-    }
+	"destroy"
 );
