@@ -9,14 +9,11 @@ class Command
 		this.description = description;
 		this.syntax = syntax;
 	}
+	// Todo: Add "setup" method
 
+	// Todo: Finish this after fixing config
 	updateConfig () 
 	{
 		
-	}
-
-	get config () // ? //
-	{
-
 	}
 }

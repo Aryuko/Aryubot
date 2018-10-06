@@ -7,7 +7,7 @@ const loadFiles		= require("./loadFiles.js");
 let client = new Discord.Client();
 
 /* Extend client with Discord, Config, and Variables */
-client.Config = Config;
+client.Config = Config; // Use Config class for this //
 client.Discord = Discord;
 client.Variables = 
 {
@@ -25,7 +25,8 @@ console.log("Loading commands...");
 loadFiles("./src/commands").then((result) =>
 {
 	/* Extend client with commands */
-    client.Commands = result.requires;
+	client.Commands = result.requires;
+	// Todo: Extend each command with their own config //
 	if (client.Commands.hasOwnProperty("exampleCommand"))
 	{
 		if(client.Commands['exampleCommand'].method())
