@@ -1,17 +1,13 @@
 const Discord		= require("discord.js");
-const Config		= require("../config/Config.Default.json");
+const Config		= require("./Config.js");
 const Functions		= require("./functions.js");
 const Credentials	= require("../credentials.json");
 const loadFiles		= require("./loadFiles.js");
 
-const Configjs = require("./Config.js");
-let ConfigjsObj = new Configjs();
-console.log(ConfigjsObj.config.commandPrefix);
-
 let client = new Discord.Client();
 
 /* Extend client with Discord, Config, and Variables */
-client.Config = Config; // Use Config class for this //
+client.Config = new Config();
 client.Discord = Discord;
 client.Variables = 
 {
@@ -35,7 +31,7 @@ loadFiles("./src/commands").then((result) =>
 	{
 		if(client.Commands['exampleCommand'].method())
 		{ 
-			console.log("Successfully loaded " + result.count + " commands. Use " + Config.commandPrefix + "commandlist to see all.");
+			console.log("Successfully loaded " + result.count + " commands. Use " + client.Config.commandPrefix + "commandlist to see all.");
 		}
 	} else
 	{

@@ -6,8 +6,8 @@ module.exports =
 	{
 		if (!message.author.bot && message.content.length > 1 && message.guild) // TODO: Add support for DM commands //
 		{
-			var input = parseInput(message.content);
-			if(input && client.Commands.hasOwnProperty(input.command) && Config.commands[input.command].enabled && permitted(message.member, client.Commands[input.command]))
+			var input = parseInput(message.content, client);
+			if(input && client.Commands.hasOwnProperty(input.command) && client.Config.commands[input.command].enabled && permitted(message.member, client.Commands[input.command], client))
 			{
 				client.Commands[input.command].method(message, input, client);
 			}
@@ -15,13 +15,13 @@ module.exports =
 	},
 	handleReaction : (reaction, user, client) =>
 	{
-		if (user.id != client.user.id && reaction.me && reaction.emoji == Config.spoilerEmoji)
+		if (user.id != client.user.id && reaction.me && reaction.emoji == client.Config.spoilerEmoji)
 		{
 			let spoiler = rot13(reaction.message.embeds[0].description);
 			let originalAuthor = reaction.message.embeds[0].author;
 			
 			let embed = new client.Discord.RichEmbed()
-			.setColor(Config.colours.green)
+			.setColor(client.Config.colours.green)
 			.setAuthor(originalAuthor.name, originalAuthor.iconURL)
 			.setDescription(spoiler)
 			.setFooter("Originally posted in #" + reaction.message.channel.name);
@@ -34,11 +34,12 @@ module.exports =
 /**
  * Parses input for commands and arguments and returns them.
  * @param {string} string
+ * @param {Client} client
  * @return {array} An array containing a string 'command' and an array of arguments 'args'
  */
-function parseInput (string)
+function parseInput (string, client)
 {
-	let regex = new RegExp("\\" + Config.commandPrefix + '(\\w+)(.*)', 'g');	// Capture one single word following the specified prefix
+	let regex = new RegExp("\\" + client.Config.commandPrefix + '(\\w+)(.*)', 'g');	// Capture one single word following the specified prefix
 	let result = regex.exec(string);
 	if (result) 
 	{
@@ -55,14 +56,15 @@ function parseInput (string)
 /**
  * @param {Member}	member 
  * @param {Command}	command 
+ * @param {Client}	client 
  * @return			True if user has permission to use the given command, False if not
  */
-function permitted (member, command)
+function permitted (member, command, client)
 {
-	if (!Config.commands[command.name].permissionGroup) { return true; }		// Permission group isn't set //
+	if (!client.Config.commands[command.name].permissionGroup) { return true; }		// Permission group isn't set //
 	else																		// Permission group is set //
 	{
-		let permissionGroup = Config.permissionGroups[Config.commands[command.name].permissionGroup];
+		let permissionGroup = client.Config.permissionGroups[client.Config.commands[command.name].permissionGroup];
 		if (permissionGroup.users.includes(member.id)) { return true; }			// User is included in user list //
 		else
 		{
