@@ -60,8 +60,7 @@ class Config
 
 		this.defaultConfig = defaultConfigFile;
 		this.config = {};
-		this.load();
-		return new Proxy(this, handler);
+		this.load().then(() => { return new Proxy(this, handler); });
 	}
 	
 	load () 
