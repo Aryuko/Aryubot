@@ -12,53 +12,45 @@ class Config
 		var handler = {
 			get: function(target, name)
 			{
-				if(name in target)					// Top level call, like functions or the actual arrays of config
-				{
+				if(name in target)
+				{			// Top level call, like functions or the actual arrays of config
 					return target[name];
-				} else								// Not found on the top level, you're probably looking for one of the config props
-				{									// Let's have a look in config
+				} else
+				{			// Not found on the top level, you're probably looking for one of the config props
 					let config = target.config;
-					if (name in config)				// Cool! We found it :D
-					{
-						return config[name]
-					} else							// Hmm, could be in defaultConfig
-					{
+					if (name in config)	
+					{		// Cool! We found it :D
+						if (typeof config[name] == "object")
+						{	// If it's an object, we'll have to fill in missing values from default
+							let defaultProp = target.defaultConfig[name];
+							let configProp = config[name];
+							return target.combineObjects(defaultProp, configProp);
+						} else
+						{	// Not an object, return as normal
+							return config[name];
+						}
+					} else
+					{		// Hmm, could be in defaultConfig
 						let defaultConfig = target.defaultConfig;
-						if (name in defaultConfig)	// Ah, there it was! :D
-						{
+						if (name in defaultConfig)
+						{	// Ah, there it was! :D
 							return defaultConfig[name];
 						}
-						else 						// T_T
-						{
+						else
+						{	// Nowhere to be found T_T
 							console.log("Tried reaching undefined property '" + name + "'");
 							return undefined;
 						}
 					}
-
-
-					/* if (!(name in config))
-					{
-						console.log("Getting non-existant property '" + name + "'");
-						return undefined;
-					} else if ((name in config) && typeof config[name] === 'object')  
-					{
-						console.log("Getting object property '" + name + "'");
-						return new Proxy(config[name], handler);
-					} else 
-					{
-						console.log("Getting existant property '" + name + "'");
-						return config[name];
-					} */
 				}
 			},
 			set: function(target, name, value)
 			{
-				if (name in target)	// Top level call, like functions or the actual arrays
-				{
+				if (name in target)
+				{	// Top level call, like functions or the actual arrays
 					target[name] = value;
-
-				} else				// Not found on the top level, you probably want to set a config prop
-				{
+				} else
+				{	// Not found on the top level, you probably want to set a config prop
 					target.config[name] = value;
 					target.save();
 				}
@@ -66,7 +58,6 @@ class Config
 			}
 		}
 
-		// Todo: Todo: Build custom config (from file or create if not found), include defaults in Config.Defaults // 
 		this.defaultConfig = defaultConfigFile;
 		this.config = {};
 		this.load();
@@ -98,22 +89,25 @@ class Config
 	{
 		return new Promise ((resolve, reject) => 
 		{
-			fs.writeFile(absoluteConfigFilePath, JSON.stringify(this.config), (err) => { if (err) { console.log(err); } });
+			fs.writeFile(absoluteConfigFilePath, JSON.stringify(this.config, null, 2), (err) => { if (err) { console.log(err); } });
 			resolve();
 		})
 	}
 
-	getProperty (prop)
+	// Recursively adds all properties of objects in obj2 to obj1
+	combineObjects (obj1, obj2)
 	{
-		if (this.config.hasOwnProperty(prop)) 
+		let obj = obj1;
+		for (var key in obj2)
 		{
-			
-		} else if (this.defaultConfig.hasOwnProperty(prop))
-		{
-			
-		} else
-		{
-			return null;
+			if (typeof obj2[key] == "object") 
+			{
+				obj[key] = this.combineObjects(obj1[key], obj2[key]);
+			} else 
+			{
+				obj[key] = obj2[key];
+			}
 		}
+		return obj;
 	}
 }
