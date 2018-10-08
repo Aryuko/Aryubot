@@ -39,5 +39,8 @@ jspm_packages
 # Credentials
 credentials.json
 
+# Config
+config/Config.json
+
 # Visual Studio Code editor
 .vscode

@@ -4,6 +4,10 @@ const Functions		= require("./functions.js");
 const Credentials	= require("../credentials.json");
 const loadFiles		= require("./loadFiles.js");
 
+const Configjs = require("./Config.js");
+let ConfigjsObj = new Configjs();
+console.log(ConfigjsObj.config.commandPrefix);
+
 let client = new Discord.Client();
 
 /* Extend client with Discord, Config, and Variables */
