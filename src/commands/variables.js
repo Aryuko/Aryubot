@@ -1,11 +1,14 @@
 const Command = require("../Command.js");
 
 module.exports = new Command (
+	// name: // 
     "variables",
+	// init: // 
 	() => 
 	{
 		return true;
 	},
+	// method: // 
     (message, input, client) => 
     {
 		let responseEmbed = new client.Discord.RichEmbed()
@@ -23,7 +26,10 @@ module.exports = new Command (
         }
         message.channel.send(responseEmbed);
     },
+	// aliases: //
     [],
+	// description: // 
     "Returns all current set variables",
+	// syntax: // 
     "variables"
 );

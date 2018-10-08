@@ -1,11 +1,14 @@
 const Command = require("../Command.js");
 
 module.exports = new Command (
+	// name: // 
 	"commandlist",
+	// init: // 
 	() => 
 	{
 		return true;
 	},
+	// method: // 
 	(message, input, client) => 
 	{
 		let commandList =  "";
@@ -20,7 +23,10 @@ module.exports = new Command (
 		.setFooter("Use " + client.Config.commandPrefix + "help <command> to find out more about the commands");
 		message.channel.send(responseEmbed);
 	},
+	// aliases: //
 	["commands"],
+	// description: // 
 	"Lists all available commands.",
+	// syntax: // 
 	"commandlist"
 );

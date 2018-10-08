@@ -1,11 +1,14 @@
 const Command = require("../Command.js");
 
 module.exports = new Command (
+	// name: // 
     "test",
+	// init: // 
 	() => 
 	{
 		return true;
 	},
+	// method: // 
     (message, input, client) => 
     {
         let responseEmbed = new client.Discord.RichEmbed()
@@ -24,7 +27,10 @@ module.exports = new Command (
         }
         message.channel.send(responseEmbed);
     },
+	// aliases: //
     [],
+	// description: // 
     "A test command used to see if arguments work properly.",
+	// syntax: // 
     "test [arg1], [arg2], [arg3].."
 );
