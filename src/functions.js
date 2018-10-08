@@ -1,5 +1,3 @@
-const Config = require("../config/Config.Default.json");
-
 module.exports = 
 {
 	handleMessage : (message, client) =>
