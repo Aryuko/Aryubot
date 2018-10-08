@@ -76,7 +76,7 @@ class Config
 			{
 				fs.writeFileAsync(absoluteConfigFilePath, JSON.stringify({})).then( (data) =>
 				{
-					console.log(data);
+					if (data) { console.log(data); }
 					var configFile = require(absoluteConfigFilePath);
 					this.config = configFile;
 				});
