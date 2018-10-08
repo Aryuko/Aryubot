@@ -1,5 +1,5 @@
 const Discord		= require("discord.js");
-const Config		= require("../Config.json");
+const Config		= require("./Config.js");
 const Functions		= require("./functions.js");
 const Credentials	= require("../credentials.json");
 const loadFiles		= require("./loadFiles.js");
@@ -7,7 +7,7 @@ const loadFiles		= require("./loadFiles.js");
 let client = new Discord.Client();
 
 /* Extend client with Discord, Config, and Variables */
-client.Config = Config;
+client.Config = new Config();
 client.Discord = Discord;
 client.Variables = 
 {
@@ -25,12 +25,13 @@ console.log("Loading commands...");
 loadFiles("./src/commands").then((result) =>
 {
 	/* Extend client with commands */
-    client.Commands = result.requires;
+	client.Commands = result.requires;
+	// Todo: Extend each command with their own config //
 	if (client.Commands.hasOwnProperty("exampleCommand"))
 	{
 		if(client.Commands['exampleCommand'].method())
 		{ 
-			console.log("Successfully loaded " + result.count + " commands. Use " + Config.commandPrefix + "commandlist to see all.");
+			console.log("Successfully loaded " + result.count + " commands. Use " + client.Config.commandPrefix + "commandlist to see all.");
 		}
 	} else
 	{

@@ -18,9 +18,5 @@ module.exports = new Command (
 	},
 	["commands"],
 	"Lists all available commands.",
-	"commandlist",
-    {
-        "enabled" : true,
-        "permissionGroup" : false
-    }
+	"commandlist"
 );

@@ -10,7 +10,7 @@ module.exports = new Command (
 			
 			let responseEmbed = new client.Discord.RichEmbed()
 			.setColor(client.Config.colours.green)
-			.setTitle(client.Config.commandPrefix + command.commandName)
+			.setTitle(client.Config.commandPrefix + command.name)
 			.addField("Description", command.description)
 			.addField("Syntax", "``" + command.syntax + "``");
 			message.channel.send(responseEmbed);
@@ -25,9 +25,5 @@ module.exports = new Command (
 	},
 	[],
 	"Helps by providing information about a given command.",
-	"help <command>",
-    {
-        "enabled" : true,
-        "permissionGroup" : false
-    }
+	"help <command>"
 );

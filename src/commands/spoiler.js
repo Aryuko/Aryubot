@@ -56,11 +56,7 @@ module.exports = new Command (
     },
     [],
     "A command that lets you encode spoilers to be able to post them in chat, and let users react to the bot message to recieve a deciphered and readable version",
-    "spoiler",
-    {
-        "enabled" : true,
-        "permissionGroup" : false
-    }
+    "spoiler"
 );
 
 function rot13 (string) 
