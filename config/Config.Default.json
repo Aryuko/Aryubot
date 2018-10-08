@@ -44,6 +44,11 @@
 			"enabled" : true,
 			"permissionGroup" : false
 		},
+		"permissiongroup" :
+		{
+			"enabled" : true,
+			"permissionGroup" : "Aryu"
+		},
 		"spoiler" :
 		{
 			"enabled" : true,

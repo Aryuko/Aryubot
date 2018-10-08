@@ -18,7 +18,7 @@ class Command
 				if (name in target)
 				{		// Accurate top level call
 					return target[name];
-				} else
+				} else if (target.config)
 				{		// Check in config
 					if (name in target.config)
 					{	// Yep, return that
@@ -27,6 +27,9 @@ class Command
 					{	// Not found
 						return undefined;
 					}
+				} else 
+				{	// Not found, and no config to look in
+					return undefined;
 				}
 			},
 			set: function (target, name, value)
