@@ -29,7 +29,7 @@
 			"enabled" : true,
 			"permissionGroup" : "Aryu"
 		},
-		"exampleCommand" :
+		"examplecommand" :
 		{
 			"enabled" : false,
 			"permissionGroup" : false

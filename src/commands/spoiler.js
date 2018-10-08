@@ -4,7 +4,7 @@ module.exports = new Command (
 	// name: // 
     "spoiler",
 	// init: // 
-	() => 
+	(client) => 
 	{
 		return true;
 	},

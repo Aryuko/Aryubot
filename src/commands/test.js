@@ -4,7 +4,7 @@ module.exports = new Command (
 	// name: // 
     "test",
 	// init: // 
-	() => 
+	(client) => 
 	{
 		return true;
 	},

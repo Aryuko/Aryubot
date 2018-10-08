@@ -4,7 +4,7 @@ module.exports = new Command (
 	// name: // 
 	"timer",
 	// init: // 
-	() => 
+	(client) => 
 	{
 		return true;
 	},

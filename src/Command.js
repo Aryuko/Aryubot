@@ -10,11 +10,10 @@ class Command
 		this.description = description;
 		this.syntax = syntax;
 	}
-	// Todo: Add "init" method
 
-	// Todo: Finish this after fixing config
+	// Update this.config from the given config object
 	updateConfig (config) 
 	{
-		this.config = config[this.name];
+		return this.config = config.commands[this.name];
 	}
 }

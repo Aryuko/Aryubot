@@ -26,10 +26,19 @@ loadFiles("./src/commands").then((result) =>
 {
 	/* Extend client with commands */
 	client.Commands = result.requires;
-	// Todo: Extend each command with their own config //
-	if (client.Commands.hasOwnProperty("exampleCommand"))
+	
+	/* Call the init function of each command and extend it with its own config */
+	for (commandName in client.Commands)
 	{
-		if(client.Commands['exampleCommand'].method())
+		let command = client.Commands[commandName];
+
+		command.init();
+		command.updateConfig(client.Config);
+	}
+	
+	if (client.Commands.hasOwnProperty("examplecommand"))
+	{
+		if(client.Commands['examplecommand'].method())
 		{ 
 			console.log("Successfully loaded " + result.count + " commands. Use " + client.Config.commandPrefix + "commandlist to see all.");
 		}

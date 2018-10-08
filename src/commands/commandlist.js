@@ -4,7 +4,7 @@ module.exports = new Command (
 	// name: // 
 	"commandlist",
 	// init: // 
-	() => 
+	(client) => 
 	{
 		return true;
 	},
