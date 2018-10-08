@@ -1,5 +1,7 @@
 const fs = require("fs-extra-promise");
-const absoluteConfigFilePath = "./config/Config.json";
+const path = require("path");
+
+const absoluteConfigFilePath = path.join(__dirname, "..", "config", "Config.json");
 const defaultConfigFile = require("../config/Config.Default.json");
 
 module.exports =
@@ -38,25 +40,27 @@ class Config
 		// Todo: Todo: Build custom config (from file or create if not found), include defaults in Config.Defaults // 
 		this.defaultConfig = defaultConfigFile;
 		this.config = {};
-		this.load();
-		// console.log(this);
-
-		return new Proxy(this, validator);
+		this.load().then(() => { return new Proxy(this, validator) });
 	}
 	
 	load () 
 	{
-		try
+		return new Promise (() => 
 		{
-			var configFile = require("../config/Config.json");
-		} catch (error)	// no Config.json file found, create an empty one
-		{
-			fs.writeFile(absoluteConfigFilePath, JSON.stringify({}), {"flag": "wx"}, (err) => console.log(err))
-			var configFile = require("../config/Config.json");
-		}
-
-		// Add all loaded config into this.config
-		this.config = configFile;
+			try
+			{
+				var configFile = require(absoluteConfigFilePath);
+				this.config = configFile;
+			} catch (error)	// no Config.json file found, create an empty one
+			{
+				fs.writeFileAsync(absoluteConfigFilePath, JSON.stringify({})).then( (data) =>
+				{
+					console.log(data);
+					var configFile = require(absoluteConfigFilePath);
+					this.config = configFile;
+				});
+			}
+		})
 	}
 
 	save () 
