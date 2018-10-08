@@ -5,7 +5,7 @@ module.exports =
 		if (!message.author.bot && message.content.length > 1 && message.guild) // TODO: Add support for DM commands //
 		{
 			var input = parseInput(message.content, client);
-			if(input && client.Commands.hasOwnProperty(input.command) && client.Config.commands[input.command].enabled && permitted(message.member, client.Commands[input.command], client))
+			if(input && client.Commands.hasOwnProperty(input.command) && client.Commands[input.command].enabled && permitted(message.member, client.Commands[input.command], client))
 			{
 				client.Commands[input.command].method(message, input, client);
 			}
@@ -62,7 +62,7 @@ function permitted (member, command, client)
 	if (!client.Config.commands[command.name].permissionGroup) { return true; }		// Permission group isn't set //
 	else																		// Permission group is set //
 	{
-		let permissionGroup = client.Config.permissionGroups[client.Config.commands[command.name].permissionGroup];
+		let permissionGroup = client.Config.permissionGroups[client.Commands[command.name].permissionGroup];
 		if (permissionGroup.users.includes(member.id)) { return true; }			// User is included in user list //
 		else
 		{

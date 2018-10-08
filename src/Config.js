@@ -9,7 +9,8 @@ class Config
 {
 	constructor ()
 	{
-		var handler = {
+		var handler =
+		{
 			get: function (target, name)
 			{
 				if (name in target)

@@ -9,6 +9,40 @@ class Command
 		this.aliases = aliases;
 		this.description = description;
 		this.syntax = syntax;
+		this.config = {};
+
+		var handler = 
+		{
+			get: function (target, name)
+			{
+				if (name in target)
+				{		// Accurate top level call
+					return target[name];
+				} else
+				{		// Check in config
+					if (name in target.config)
+					{	// Yep, return that
+						return target.config[name];
+					} else
+					{	// Not found
+						return undefined;
+					}
+				}
+			},
+			set: function (target, name, value)
+			{
+				if (name in target)
+				{		// Accurate top level call
+					target[name] = value;
+				} else
+				{		// If not, put it in config
+					target.config[name] = value;
+				}
+				return true;
+			},
+		}
+		
+		return new Proxy(this, handler);
 	}
 
 	// Update this.config from the given config object
