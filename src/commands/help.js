@@ -2,6 +2,10 @@ const Command = require("../Command.js");
 
 module.exports = new Command (
 	"help",
+	() => 
+	{
+		return true;
+	},
 	(message, input, client) => 
 	{
 		if (input.args)

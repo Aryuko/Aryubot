@@ -2,6 +2,10 @@ const Command = require("../Command.js");
 
 module.exports = new Command (
 	"destroy",
+	() => 
+	{
+		return true;
+	},
 	(message, input, client) => 
 	{
 		message.channel.send("Good bye :(");

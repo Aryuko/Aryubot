@@ -2,6 +2,10 @@ const Command = require("../Command.js");
 
 module.exports = new Command (
 	"timer",
+	() => 
+	{
+		return true;
+	},
 	(message, input, client) => 
 	{
 		let responseEmbed = new client.Discord.RichEmbed();

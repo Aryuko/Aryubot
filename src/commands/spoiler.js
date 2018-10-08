@@ -2,6 +2,10 @@ const Command = require("../Command.js");
 
 module.exports = new Command (
     "spoiler",
+	() => 
+	{
+		return true;
+	},
     (message, input, client) => 
     {
         let idUrl = "https://" + message.author.id + ".se/";

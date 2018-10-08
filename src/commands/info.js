@@ -2,6 +2,10 @@ const Command = require("../Command.js");
 
 module.exports = new Command (
     "info",
+	() => 
+	{
+		return true;
+	},
     (message, input, client) => 
     {
         let responseEmbed = new client.Discord.RichEmbed()

@@ -2,6 +2,10 @@ const Command = require("../Command.js");
 
 module.exports = new Command (
 	"commandlist",
+	() => 
+	{
+		return true;
+	},
 	(message, input, client) => 
 	{
 		let commandList =  "";
