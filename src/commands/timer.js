@@ -6,6 +6,13 @@ module.exports = new Command (
 	// init: // 
 	(client) => 
 	{
+		client.Variables.timer =
+		{
+			"registered" : false,
+			"name" : false,
+			"time" : false,
+			"intervalObject" : false
+		}
 		return true;
 	},
 	// method: // 

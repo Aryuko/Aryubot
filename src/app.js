@@ -9,16 +9,7 @@ let client = new Discord.Client();
 /* Extend client with Discord, Config, and Variables */
 client.Config = new Config();
 client.Discord = Discord;
-client.Variables = 
-{
-	"timer" : 
-	{
-		"registered" : false,
-		"name" : false,
-		"time" : false,
-		"intervalObject" : false
-	}
-};
+client.Variables = {};
 
 /* Load commands */ 
 console.log("Loading commands...");
@@ -32,7 +23,7 @@ loadFiles("./src/commands").then((result) =>
 	{
 		let command = client.Commands[commandName];
 
-		command.init();
+		command.init(client);
 		command.updateConfig(client.Config);
 	}
 	
