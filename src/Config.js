@@ -1,7 +1,7 @@
 const fs = require("fs-extra-promise");
 const path = require("path");
 
-const absoluteConfigFilePath = path.join(__dirname, "..", "config", "Config.json");
+const configFilePath = path.join(__dirname, "..", "config", "Config.json");
 const defaultConfigFile = require("../config/Config.Default.json");
 
 module.exports =
@@ -10,9 +10,9 @@ class Config
 	constructor ()
 	{
 		var handler = {
-			get: function(target, name)
+			get: function (target, name)
 			{
-				if(name in target)
+				if (name in target)
 				{			// Top level call, like functions or the actual arrays of config
 					return target[name];
 				} else
@@ -44,7 +44,7 @@ class Config
 					}
 				}
 			},
-			set: function(target, name, value)
+			set: function (target, name, value)
 			{
 				if (name in target)
 				{	// Top level call, like functions or the actual arrays
@@ -70,14 +70,14 @@ class Config
 		{
 			try
 			{
-				var configFile = require(absoluteConfigFilePath);
+				var configFile = require(configFilePath);
 				this.config = configFile;
 			} catch (error)	// no Config.json file found, create an empty one
 			{
-				fs.writeFileAsync(absoluteConfigFilePath, JSON.stringify({})).then( (data) =>
+				fs.writeFileAsync(configFilePath, JSON.stringify({})).then( (data) =>
 				{
 					if (data) { console.log(data); }
-					var configFile = require(absoluteConfigFilePath);
+					var configFile = require(configFilePath);
 					this.config = configFile;
 				});
 			}
@@ -89,7 +89,7 @@ class Config
 	{
 		return new Promise ((resolve, reject) => 
 		{
-			fs.writeFile(absoluteConfigFilePath, JSON.stringify(this.config, null, 2), (err) => { if (err) { console.log(err); } });
+			fs.writeFile(configFilePath, JSON.stringify(this.config, null, 2), (err) => { if (err) { console.log(err); } });
 			resolve();
 		})
 	}
