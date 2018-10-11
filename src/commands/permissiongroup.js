@@ -33,6 +33,7 @@ module.exports = new Command (
 					break;
 				case "delete":
 					// Todo: Fill in
+					// Todo: Maybe remove role from commands that used it, reverting them back to default
 					break;
 				case "addrole":
 					// Todo: Fill in
