@@ -13,6 +13,7 @@ class Config
 		{
 			get: function (target, name)
 			{
+				console.log("custom get triggered: " + name);
 				if (name in target)
 				{			// Top level call, like functions or the actual arrays of config
 					return target[name];
@@ -25,7 +26,7 @@ class Config
 						{	// If it's an object, we'll have to fill in missing values from default
 							let defaultProp = target.defaultConfig[name];
 							let configProp = config[name];
-							return target.combineObjects(defaultProp, configProp);
+							return target.combineObjects(defaultProp, configProp, target);
 						} else
 						{	// Not an object, return as normal
 							return config[name];
@@ -93,6 +94,7 @@ class Config
 	save () 
 	{
 		console.log("save: ", this.config);
+		// console.log("Config.json updated");
 		return new Promise ((resolve, reject) => 
 		{
 			fs.writeFileAsync(configFilePath, JSON.stringify(this.config, null, 2)).then( (err) => 
@@ -108,19 +110,38 @@ class Config
 	}
 
 	// Recursively adds all properties of objects in obj2 to obj1
-	combineObjects (obj1, obj2)	// Todo: Fix set not saving on Objets created by this.
+	combineObjects (obj1, obj2, ogTarget)	// Todo: Fix set not saving on Objects created by this.
 	{
+		// console.log("ogTarget: ");
+		// console.log(ogTarget);
+		// console.log(this);
 		let obj = obj1;
 		for (var key in obj2)
 		{
 			if (typeof obj2[key] == "object") 
 			{
-				obj[key] = this.combineObjects(obj1[key], obj2[key]);
+				obj[key] = this.combineObjects(obj1[key], obj2[key], ogTarget);
 			} else 
 			{
 				obj[key] = obj2[key];
 			}
 		}
+		return new Proxy(obj, {
+			set: function (target, name, value)
+			{
+				// console.log("setting subobject '" + name + "'");
+				// console.log("value before change: " + target[name]);
+				target[name] = value;
+				// console.log("value after change: " + target[name]);
+				// console.log("config after change: " + ogTarget[name]);
+				// changing target[name] doesn't seem to change the original config
+
+				// `ogTarget` ignores proxy? ofc it does ._. so does `this`.. and gives undefined for get?
+				// console.log("dc.cp: " + ogTarget.defaultConfig.commandPrefix);
+				// console.log("c.cp: " + ogTarget.commandPrefix);
+				ogTarget.save();
+			}
+		});
 		return obj;
 	}
 }

@@ -8,6 +8,16 @@ let client = new Discord.Client();
 
 /* Extend client with Discord, Config, and Variables */
 client.Config = new Config();
+
+// client.Config.permissionGroups = {"test" : 1, "test3": 3};
+client.Config.permissionGroups.test = 2;
+client.Config.permissionGroups['test'] = 3;
+// client.Config.save();
+console.log("test from app.js: " + client.Config.permissionGroups.test);
+console.log("config.test from app.js: " + client.Config.config.permissionGroups.test);
+console.log("full config from app.js: ");
+console.log(client.Config.config);
+
 client.Discord = Discord;
 client.Variables = {};
 
