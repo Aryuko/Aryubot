@@ -27,9 +27,9 @@ loadFiles("./src/commands").then((result) =>
 		command.updateConfig(client.Config);
 	}
 	
-	if (client.Commands.hasOwnProperty("examplecommand"))
+	if ("examplecommand" in client.Commands)
 	{
-		if(client.Commands['examplecommand'].method())
+		if (client.Commands.examplecommand.method())
 		{ 
 			console.log("Successfully loaded " + result.count + " commands. Use " + client.Config.commandPrefix + "commandlist to see all.");
 		}
