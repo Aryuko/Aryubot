@@ -120,11 +120,9 @@ class Config
 		{
 			if (typeof obj2[key] == "object") 
 			{
-				obj[key] = this.combineObjects(obj1[key], obj2[key], ogTarget);
-			} else 
-			{
-				obj[key] = obj2[key];
-			}
+				if (key in obj1) { obj[key] = this.combineObjects(obj1[key], obj2[key], ogTarget); }
+				else { obj[key] = obj2[key]; }
+			} else { obj[key] = obj2[key]; }
 		}
 		return new Proxy(obj, {
 			set: function (target, name, value)
