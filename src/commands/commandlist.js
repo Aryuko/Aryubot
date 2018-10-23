@@ -1,22 +1,59 @@
 const Command = require("../Command.js");
 
 module.exports = new Command (
+	// name: // 
 	"commandlist",
+	// init: // 
+	(client) => 
+	{
+		return true;
+	},
+	// method: // 
 	(message, input, client) => 
 	{
 		let commandList =  "";
+		let title = ""; 
+		// TODO: Move title and bool switch out of the for loop! It requires c to be defined atm, something will have to change //
 		for (command in client.Commands) {
-			commandList += "• " + client.Config.commandPrefix + command + "\n";
+			let c = client.Commands[command];
+
+			let bool = true;
+			if (input.args)
+			{
+				switch (input.args[0])
+				{
+					case "all":
+						bool = c.enabled;
+						title = "All commands";
+						break;
+					default:
+						bool = c.enabled && (c.permissionGroup == false || c.permissionGroup == input.args[0]);
+						title = "Commands for group '" + input.args[0] + "'";
+						break;
+				}
+			} else 
+			{
+				bool = c.enabled && c.permissionGroup == false;
+				title = "Public commands";
+			}
+
+			if (bool)
+			{
+				commandList += "• " + client.Config.commandPrefix + c.name + "\n";
+			}
 		}
 
 		let responseEmbed = new client.Discord.RichEmbed()
 		.setColor(client.Config.colours.green)
-		.setTitle("Commands")
+		.setTitle(title)
 		.setDescription(commandList)
 		.setFooter("Use " + client.Config.commandPrefix + "help <command> to find out more about the commands");
 		message.channel.send(responseEmbed);
 	},
+	// aliases: //
 	["commands"],
+	// description: // 
 	"Lists all available commands.",
-	"commandlist"
+	// syntax: // 
+	"commandlist [?all/<permissionGroup>]"
 );

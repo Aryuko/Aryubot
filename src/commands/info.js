@@ -1,7 +1,14 @@
 const Command = require("../Command.js");
 
 module.exports = new Command (
+	// name: // 
     "info",
+	// init: // 
+	(client) => 
+	{
+		return true;
+	},
+	// method: // 
     (message, input, client) => 
     {
         let responseEmbed = new client.Discord.RichEmbed()
@@ -14,8 +21,11 @@ module.exports = new Command (
         .setFooter("Serving " + client.guilds.size + " servers with a combined total of " + client.users.size + " users.\nCurrent uninterrupted uptime: " + timeConversion(client.uptime));
         message.channel.send(responseEmbed);
     },
+	// aliases: //
     [],
+	// description: // 
     "A command that shows some info about the bot and its author.",
+	// syntax: // 
     "info"
 );
 

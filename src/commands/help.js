@@ -1,7 +1,14 @@
 const Command = require("../Command.js");
 
 module.exports = new Command (
+	// name: // 
 	"help",
+	// init: // 
+	(client) => 
+	{
+		return true;
+	},
+	// method: // 
 	(message, input, client) => 
 	{
 		if (input.args)
@@ -23,7 +30,10 @@ module.exports = new Command (
 			message.channel.send(responseEmbed);
 		}
 	},
+	// aliases: //
 	[],
+	// description: // 
 	"Helps by providing information about a given command.",
+	// syntax: // 
 	"help <command>"
 );

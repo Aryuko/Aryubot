@@ -8,3 +8,12 @@ A discord bot for handling spoilers, with more features planned.
 3. Install dependencies using npm: ``npm install``.
 4. Fill in your credentials in ``credentials.json``. Your client ID and bot token can be found [here](https://discordapp.com/developers/applications/me).
 5. use ``git update-index --skip-worktree credentials.json`` to make sure you don't accidentally commit your credentials.
+6. (Optional) if you want to be able to install to a .exe, run ``npm install pkg -g``
+ 
+## Running
+
+1. Run ``npm start``
+
+## Compilation
+
+1. Run ``npm run package``

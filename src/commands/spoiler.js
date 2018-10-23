@@ -1,7 +1,14 @@
 const Command = require("../Command.js");
 
 module.exports = new Command (
+	// name: // 
     "spoiler",
+	// init: // 
+	(client) => 
+	{
+		return true;
+	},
+	// method: // 
     (message, input, client) => 
     {
         let idUrl = "https://" + message.author.id + ".se/";
@@ -54,8 +61,11 @@ module.exports = new Command (
         })
         .catch(console.error);
     },
+	// aliases: //
     [],
+	// description: // 
     "A command that lets you encode spoilers to be able to post them in chat, and let users react to the bot message to recieve a deciphered and readable version",
+	// syntax: // 
     "spoiler"
 );
 

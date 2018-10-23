@@ -1,7 +1,21 @@
 const Command = require("../Command.js");
 
 module.exports = new Command (
+	// name: // 
 	"timer",
+	// init: // 
+	(client) => 
+	{
+		client.Variables.timer =
+		{
+			"registered" : false,
+			"name" : false,
+			"time" : false,
+			"intervalObject" : false
+		}
+		return true;
+	},
+	// method: // 
 	(message, input, client) => 
 	{
 		let responseEmbed = new client.Discord.RichEmbed();
@@ -91,8 +105,11 @@ module.exports = new Command (
 			message.channel.send(responseEmbed);
 		}
 	},
+	// aliases: //
 	[],
+	// description: // 
 	"Sets the bot status to a timer showing how long is left until the given event",
+	// syntax: // 
 	"timer <action> <name of event> <time of event>"
 );
 // ex: !timer set "test" "2018 Oct 29 22:40"

@@ -9,7 +9,8 @@ class Config
 {
 	constructor ()
 	{
-		var handler = {
+		var handler =
+		{
 			get: function (target, name)
 			{
 				if (name in target)
@@ -59,8 +60,9 @@ class Config
 		}
 
 		this.defaultConfig = defaultConfigFile;
-		this.config = {};
-		this.load().then(() => { return new Proxy(this, handler); });
+		this.config = {"colours": {}, "permissionGroups": {}, "commands": {}};
+		this.load();
+		return new Proxy(this, handler); 
 	}
 	
 	load () 
@@ -73,9 +75,13 @@ class Config
 				this.config = configFile;
 			} catch (error)	// no Config.json file found, create an empty one
 			{
-				fs.writeFileAsync(configFilePath, JSON.stringify({})).then( (data) =>
+				fs.writeFileAsync(configFilePath, JSON.stringify(this.config, null, 2)).then( (err) =>
 				{
-					if (data) { console.log(data); }
+					if (err)
+					{
+						console.log(err);
+						reject(err);
+					}
 					var configFile = require(configFilePath);
 					this.config = configFile;
 				});
@@ -86,15 +92,23 @@ class Config
 
 	save () 
 	{
+		console.log("save: ", this.config);
 		return new Promise ((resolve, reject) => 
 		{
-			fs.writeFile(configFilePath, JSON.stringify(this.config, null, 2), (err) => { if (err) { console.log(err); } });
-			resolve();
+			fs.writeFileAsync(configFilePath, JSON.stringify(this.config, null, 2)).then( (err) => 
+			{
+				if (err)
+				{
+					console.log(err);
+					reject(err);
+				}
+				resolve();
+			});
 		})
 	}
 
 	// Recursively adds all properties of objects in obj2 to obj1
-	combineObjects (obj1, obj2)
+	combineObjects (obj1, obj2)	// Todo: Fix set not saving on Objets created by this.
 	{
 		let obj = obj1;
 		for (var key in obj2)
