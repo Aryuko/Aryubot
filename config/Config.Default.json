@@ -4,10 +4,10 @@
 	"spoilerEmoji"	:	"🙈",
 	"colours": 
 	{
-		"purple"	: "#ab6cfc",
-		"green"		: "#1db954",
-		"red"		: "#e01818",
-		"yellow"	: "#f2ee18"
+		"personal"	: "#ab6cfc",
+		"success"		: "#1db954",
+		"fail"		: "#e01818",
+		"progress"	: "#f2ee18"
 	},
 	"permissionGroups" :
 	{

@@ -13,7 +13,7 @@ module.exports = new Command (
     {
         let idUrl = "https://" + message.author.id + ".se/";
         let spoilerMessageEmbed = new client.Discord.RichEmbed()
-        .setColor(client.Config.colours.yellow)
+        .setColor(client.Config.colours.progress)
         .setAuthor(message.author.username, message.author.avatarURL, idUrl)
         .setDescription("...")
         .setFooter("Processing spoiler, waiting for a DM from the author...");
@@ -22,7 +22,7 @@ module.exports = new Command (
         .then((spoilerMessage) =>
         {
             let botInstructionEmbed = new client.Discord.RichEmbed()
-            .setColor(client.Config.colours.yellow)
+            .setColor(client.Config.colours.progress)
             .addField("Spoiler?", "Reply to me with your spoiler in clear text and I'll encode, format, and post it after your messsage in the original channel.")
             .setFooter("You have " + client.Config.replyTimeout + " seconds to reply before I abort.");
     
@@ -33,13 +33,13 @@ module.exports = new Command (
                 .then((collected) =>
                 {
                     let botConfirmationEmbed = new client.Discord.RichEmbed()
-                    .setColor(client.Config.colours.green)
+                    .setColor(client.Config.colours.success)
                     .addField("Success! 🎉", "Message has been posted to #" + message.channel.name);
                     
                     botInstructionMessage.edit(botConfirmationEmbed);
                     
                     let spoilerMessageSuccessEmbed = new client.Discord.RichEmbed()
-                    .setColor(client.Config.colours.green)
+                    .setColor(client.Config.colours.success)
                     .setAuthor(message.author.username, message.author.avatarURL, idUrl)
                     .setDescription(rot13(collected.first().content))
                     .setFooter("React using a " + client.Config.spoilerEmoji + " to recieve a translation of the spoiler.");
@@ -50,7 +50,7 @@ module.exports = new Command (
                     .catch((error) =>
                     {
                         let botAbortEmbed = new client.Discord.RichEmbed()
-                    .setColor(client.Config.colours.red)
+                    .setColor(client.Config.colours.fail)
                     .addField("Aborted 😭", "No response recieved in the given time frame, please repeat the process whenever you have your message ready.")
                     .setFooter("Remember, you only have " + client.Config.replyTimeout + " seconds to reply before I abort.");
     

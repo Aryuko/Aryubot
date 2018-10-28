@@ -16,7 +16,7 @@ module.exports = new Command (
 			let command = client.Commands[input.args[0]];
 			
 			let responseEmbed = new client.Discord.RichEmbed()
-			.setColor(client.Config.colours.green)
+			.setColor(client.Config.colours.success)
 			.setTitle(client.Config.commandPrefix + command.name)
 			.addField("Description", command.description)
 			.addField("Syntax", "``" + command.syntax + "``");
@@ -24,7 +24,7 @@ module.exports = new Command (
 		} else 
 		{
 			let responseEmbed = new client.Discord.RichEmbed()
-			.setColor(client.Config.colours.red)
+			.setColor(client.Config.colours.fail)
 			.setTitle("Error")
 			.setDescription("Invalid arguments, please follow the following syntax:\n``" + client.Config.commandPrefix + client.Commands['help'].syntax + "``");
 			message.channel.send(responseEmbed);
