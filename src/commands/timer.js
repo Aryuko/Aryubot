@@ -44,14 +44,14 @@ module.exports = new Command (
 						client.Variables.timer.time				= time;
 						updateStatus(name, time, client);
 
-						responseEmbed.setColor(client.Config.colours.green)
+						responseEmbed.setColor(client.Config.colours.success)
 						.setTitle("Timer set")
 						.setDescription("'" + name + "' set for " + time);
 						message.channel.send(responseEmbed);
 		
 					} else // Incorrectly formatted time //
 					{
-						responseEmbed.setColor(client.Config.colours.red)
+						responseEmbed.setColor(client.Config.colours.fail)
 						.setTitle("Incorrect input")
 						.setDescription("Incorrectly formatted time");
 						message.channel.send(responseEmbed);
@@ -70,7 +70,7 @@ module.exports = new Command (
 					client.Variables.timer.time				= false;
 					client.user.setPresence({ status: 'online', game: null});
 					
-					responseEmbed.setColor(client.Config.colours.green)
+					responseEmbed.setColor(client.Config.colours.success)
 					.setTitle("Timer unset")
 					.setDescription("The timer has now been unset");
 					message.channel.send(responseEmbed);
@@ -78,7 +78,7 @@ module.exports = new Command (
 					break;
 
 				default: // Incorrect action argument //
-					responseEmbed.setColor(client.Config.colours.red)
+					responseEmbed.setColor(client.Config.colours.fail)
 					.setTitle("Incorrect input")
 					.setDescription("Incorrect arguments, please use either ``set`` or ``unset`` as the second argument, or omit all arguments");
 					message.channel.send(responseEmbed);
@@ -86,7 +86,7 @@ module.exports = new Command (
 			}
 		} else // No arguments set //
 		{
-			responseEmbed.setColor(client.Config.colours.green)
+			responseEmbed.setColor(client.Config.colours.success)
 			.setTitle("Current timer");
 			if(client.Variables.timer.registered)
 			{

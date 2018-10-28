@@ -12,7 +12,7 @@ module.exports = new Command (
     (message, input, client) => 
     {
         let responseEmbed = new client.Discord.RichEmbed()
-        .setColor(client.Config.colours.purple)
+        .setColor(client.Config.colours.personal)
         .addField("Command", input.command);
         if(input.args) 
         {

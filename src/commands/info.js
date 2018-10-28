@@ -12,7 +12,7 @@ module.exports = new Command (
     (message, input, client) => 
     {
         let responseEmbed = new client.Discord.RichEmbed()
-        .setColor(client.Config.colours.purple)
+        .setColor(client.Config.colours.personal)
         .setAuthor(client.user.username, client.user.avatarURL, "https://github.com/Aryuko/Aryubot")
         .setDescription("Salutations! My name is Penny, and I'm here to help :D")
         .addField("Development", "My development is currently a work in progress. If you want, you can view my code and contribute on [GitHub](https://github.com/Aryuko/Aryubot)!", true)

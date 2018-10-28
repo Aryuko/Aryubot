@@ -44,7 +44,7 @@ module.exports = new Command (
 		}
 
 		let responseEmbed = new client.Discord.RichEmbed()
-		.setColor(client.Config.colours.green)
+		.setColor(client.Config.colours.success)
 		.setTitle(title)
 		.setDescription(commandList)
 		.setFooter("Use " + client.Config.commandPrefix + "help <command> to find out more about the commands");

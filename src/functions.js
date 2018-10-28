@@ -19,7 +19,7 @@ module.exports =
 			let originalAuthor = reaction.message.embeds[0].author;
 			
 			let embed = new client.Discord.RichEmbed()
-			.setColor(client.Config.colours.green)
+			.setColor(client.Config.colours.success)
 			.setAuthor(originalAuthor.name, originalAuthor.iconURL)
 			.setDescription(spoiler)
 			.setFooter("Originally posted in #" + reaction.message.channel.name);

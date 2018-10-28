@@ -52,7 +52,7 @@ client.on("disconnected", () =>
 	process.exit(1);
 });
 
-client.on("message", (message) => Functions.handleMessage(message, client));
+client.on("message",            (message)        => Functions.handleMessage(message, client));
 client.on("messageReactionAdd", (reaction, user) => Functions.handleReaction(reaction, user, client));
 
 /*
