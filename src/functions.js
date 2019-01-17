@@ -62,7 +62,7 @@ function permitted (member, command, client)
 	if (!client.Config.commands[command.name].permissionGroup) { return true; }		// Permission group isn't set //
 	else																		// Permission group is set //
 	{
-		let permissionGroup = client.Config.permissionGroups[client.Commands[command.name].permissionGroup];
+		let permissionGroup = client.Config.permissionGroups[command.permissionGroup];
 		if (permissionGroup.users.includes(member.id)) { return true; }			// User is included in user list //
 		else
 		{
