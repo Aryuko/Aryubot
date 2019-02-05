@@ -66,9 +66,11 @@ class CommandHandler
 	 */
 	permitted (member, command)
 	{
-		if (!this.config.commands[command.name].permissionGroup) { return true; }		// Permission group isn't set //
+		if (!this.config.commands[command.name].permissionGroup) { return true; }	// Permission group isn't set //
 		else																		// Permission group is set //
 		{
+			if (member.id == this.config.ownerID) { return true; }					// Always allow bot owner //
+			
 			let permissionGroup = this.config.permissionGroups[command.permissionGroup];
 			if (permissionGroup.users.includes(member.id)) { return true; }			// User is included in user list //
 			else
