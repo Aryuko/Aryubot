@@ -26,7 +26,9 @@ class CommandHandler
 			if(input && command && command.enabled && this.isPermitted(message.member, command, this.client))
 			{
 				this.incrementLogCount(message.member.id)
-				command.method(message, input, this.client);
+
+				if (input.args && input.args[0] == 'help')	{ this.getCommand('help').method(message, {'command': 'help', 'args': [input.command]}, this.client) }
+				else										{ command.method(message, input, this.client); }
 			}
 		}
 	}
