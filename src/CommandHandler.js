@@ -7,7 +7,14 @@ class CommandHandler
 		this.commands = commands;
 		this.config = config;
 
-		this.userLog = {}
+		this.userLog = {};
+
+		this.aliases = [];
+		for (let commandName in this.commands) {
+			for (let alias of this.commands[commandName].aliases) {
+				this.aliases[alias] = commandName
+			}
+		}
 	}
 
 	handleMessage (message)
@@ -15,7 +22,7 @@ class CommandHandler
 		if (!message.author.bot && message.content.length > 1 && message.guild) // TODO: Add support for DM commands //
 		{
 			let input = this.parseInput(message.content, this.client);
-			let command = this.commands[input.command];
+			let command = this.getCommand(input.command);
 			if(input && command && command.enabled && this.isPermitted(message.member, command, this.client))
 			{
 				this.incrementLogCount(message.member.id)
@@ -61,6 +68,12 @@ class CommandHandler
 			}
 		}
 		else { return false; } 
+	}
+
+	getCommand (commandName)
+	{
+		if 		(commandName in this.commands) 	{ return this.commands[commandName] }
+		else if (commandName in this.aliases) 	{ return this.commands[this.aliases[commandName]] }
 	}
 	
 	/**
