@@ -11,8 +11,11 @@ module.exports = new Command (
 	// method: // 
 	(message, input, client) => 
 	{
-		message.channel.send("Good bye :(");
-		client.destroy();
+		message.channel.send("Farewell :(").then(() => {
+			client.destroy().then(() => {
+				process.exit(1);
+			});
+		});
 	},
 	// aliases: //
 	[],
