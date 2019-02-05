@@ -12,10 +12,11 @@ class CommandHandler
 	{
 		if (!message.author.bot && message.content.length > 1 && message.guild) // TODO: Add support for DM commands //
 		{
-			var input = this.parseInput(message.content, this.client);
-			if(input && this.commands.hasOwnProperty(input.command) && this.commands[input.command].enabled && this.permitted(message.member, this.commands[input.command], this.client))
+			let input = this.parseInput(message.content, this.client);
+			let command = this.commands[input.command];
+			if(input && command && command.enabled && this.permitted(message.member, command, this.client))
 			{
-				this.commands[input.command].method(message, input, this.client);
+				command.method(message, input, this.client);
 			}
 		}
 	}
