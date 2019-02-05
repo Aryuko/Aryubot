@@ -16,13 +16,13 @@ module.exports = new Command (
 		
         for (variableGroup in client.Variables)
         {
-			let varsString = "";
+			let variables = []
 			for (variable in client.Variables[variableGroup])
 			{
-				varsString += variable + ": " + client.Variables[variableGroup][variable] + "\n";
+				variables.push("• " + variable + ": " + client.Variables[variableGroup][variable]);
 			}
-			if (varsString.length == 0) { varsString = "*(none)*"; }
-			responseEmbed.addField(variableGroup, varsString);
+			if (variables.size == 0) { variables = ["*(none)*"]; }
+			responseEmbed.addField(variableGroup, variables.join("\n"));
         }
         message.channel.send(responseEmbed);
     },

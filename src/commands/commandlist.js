@@ -11,7 +11,7 @@ module.exports = new Command (
 	// method: // 
 	(message, input, client) => 
 	{
-		let commandList =  "";
+		let commands = [];
 		let title = ""; 
 		// TODO: Move title and bool switch out of the for loop! It requires c to be defined atm, something will have to change //
 		for (command in client.Commands) {
@@ -39,14 +39,14 @@ module.exports = new Command (
 
 			if (bool)
 			{
-				commandList += "• " + client.Config.commandPrefix + c.name + "\n";
+				commands.push("• " + client.Config.commandPrefix + c.name);
 			}
 		}
 
 		let responseEmbed = new client.Discord.RichEmbed()
 		.setColor(client.Config.colours.success)
 		.setTitle(title)
-		.setDescription(commandList)
+		.setDescription(commands.join("\n"))
 		.setFooter("Use " + client.Config.commandPrefix + "help <command> to find out more about the commands");
 		message.channel.send(responseEmbed);
 	},
