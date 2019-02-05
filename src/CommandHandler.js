@@ -6,6 +6,8 @@ class CommandHandler
 		this.client = client;
 		this.commands = commands;
 		this.config = config;
+
+		this.userLog = {}
 	}
 
 	handleMessage (message)
@@ -14,8 +16,9 @@ class CommandHandler
 		{
 			let input = this.parseInput(message.content, this.client);
 			let command = this.commands[input.command];
-			if(input && command && command.enabled && this.permitted(message.member, command, this.client))
+			if(input && command && command.enabled && this.isPermitted(message.member, command, this.client))
 			{
+				this.incrementLogCount(message.member.id)
 				command.method(message, input, this.client);
 			}
 		}
@@ -23,7 +26,7 @@ class CommandHandler
 
 	handleReaction (reaction, user)
 	{
-		if (user.id != this.client.user.id && reaction.me && reaction.emoji == this.config.spoilerEmoji)
+		if (!this.isRateLimited(user.id) && user.id != this.client.user.id && reaction.me && reaction.emoji == this.config.spoilerEmoji)
 		{
 			let spoiler = this.rot13(reaction.message.embeds[0].description);
 			let originalAuthor = reaction.message.embeds[0].author;
@@ -34,6 +37,7 @@ class CommandHandler
 			.setDescription(spoiler)
 			.setFooter("Originally posted in #" + reaction.message.channel.name);
 
+			this.incrementLogCount(user.id)
 			user.send(embed);
 		}
 	}
@@ -65,8 +69,9 @@ class CommandHandler
 	 * @param {this.client}	this.client 
 	 * @return			True if user has permission to use the given command, False if not
 	 */
-	permitted (member, command)
+	isPermitted (member, command)
 	{
+		if (this.isRateLimited(member.id)) { return false; }							// Too many commands in a short amount of time //
 		if (!this.config.commands[command.name].permissionGroup) { return true; }	// Permission group isn't set //
 		else																		// Permission group is set //
 		{
@@ -85,6 +90,29 @@ class CommandHandler
 		return false;
 	}
 	
+	isRateLimited (userID)
+	{
+		return (userID in this.userLog && this.userLog[userID] >= this.config.commandAmountLimit)
+	}
+
+	incrementLogCount (userID)
+	{
+		if (userID in this.userLog) {
+			this.userLog[userID]++;
+		} else {
+			this.userLog[userID] = 1
+		}
+		setTimeout(() => { this.decrementLogCount(userID) }, this.config.commandTimeLimit * 1000);
+	}
+
+	decrementLogCount (userID)
+	{
+		if (userID in this.userLog) {
+			if (this.userLog[userID] > 0) { this.userLog[userID]--; }
+			else { this.userLog[userID] = 0}
+		}
+	}
+
 	rot13 (string) 
 	{
 		return string.replace(/[A-Za-z]/g, function (c)

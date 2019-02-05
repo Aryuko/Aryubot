@@ -1,8 +1,10 @@
 {
-	"ownerID"		:	"106109569486315520",
-	"commandPrefix"	:	"!",
-	"replyTimeout"	:	120,
-	"spoilerEmoji"	:	"🙈",
+	"ownerID"				:	"106109569486315520",
+	"commandPrefix"			:	"!",
+	"replyTimeout"			:	120,
+	"spoilerEmoji"			:	"🙈",
+	"commandAmountLimit"	:	10,
+	"commandTimeLimit"		:	60,
 	"colours": 
 	{
 		"personal"	: "#ab6cfc",
