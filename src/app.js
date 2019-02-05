@@ -1,10 +1,11 @@
-const Discord		= require("discord.js");
-const Config		= require("./Config.js");
-const Functions		= require("./functions.js");
-const Credentials	= require("../credentials.json");
-const loadFiles		= require("./loadFiles.js");
+const Discord			= require("discord.js");
+const Config			= require("./Config.js");
+const CommandHandler	= require("./CommandHandler.js");
+const Credentials		= require("../credentials.json");
+const loadFiles			= require("./loadFiles.js");
 
 let client = new Discord.Client();
+let commandHandler;
 
 /* Extend client with Discord, Config, and Variables */
 client.Config = new Config();
@@ -26,7 +27,9 @@ loadFiles("./src/commands").then((result) =>
 		command.init(client);
 		command.updateConfig(client.Config);
 	}
-	
+
+	commandHandler = new CommandHandler(client, client.Commands, client.Config)
+
 	if ("examplecommand" in client.Commands)
 	{
 		if (client.Commands.examplecommand.method())
@@ -52,8 +55,8 @@ client.on("disconnected", () =>
 	process.exit(1);
 });
 
-client.on("message",            (message)        => Functions.handleMessage(message, client));
-client.on("messageReactionAdd", (reaction, user) => Functions.handleReaction(reaction, user, client));
+client.on("message",            (message)        => commandHandler.handleMessage(message, client));
+client.on("messageReactionAdd", (reaction, user) => commandHandler.handleReaction(reaction, user, client));
 
 /*
 	Following code allows message reaction events to also work on non-caches messages.
