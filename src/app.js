@@ -55,6 +55,8 @@ client.on("disconnected", () =>
 	process.exit(1);
 });
 
+client.on("error", (error) => { console.error(error) })
+
 client.on("message",            (message)        => commandHandler.handleMessage(message, client));
 client.on("messageReactionAdd", (reaction, user) => commandHandler.handleReaction(reaction, user, client));
 
