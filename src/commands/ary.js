@@ -29,6 +29,23 @@ module.exports = new Command (
                             case "whenim":
                                 message.channel.send('https://www.youtube.com/watch?v=a5H2_emWYyw')
                             break;
+                            case "love":
+                                // list kept here: https://imgur.com/a/GrNmqEd
+                                let images = [
+                                    "https://i.imgur.com/E6nGQZd.jpg",
+                                    "https://i.imgur.com/yvZnywG.jpg",
+                                    "https://i.imgur.com/pAA4MyS.jpg",
+                                    "https://i.imgur.com/UMnXAZE.jpg",
+                                    "https://i.imgur.com/OdiQhcc.jpg",
+                                    "https://i.imgur.com/YLYBqmN.jpg",
+                                    "https://i.imgur.com/qYvAX4j.jpg",
+                                    "https://i.imgur.com/KWRWAMy.jpg",
+                                    "https://i.imgur.com/2tYlzUZ.jpg",
+                                    "https://i.imgur.com/xAIEI1e.jpg"
+                                ]
+                                let i = Math.floor(Math.random() * images.length)
+                                message.channel.send('', { files: [ images[i] ] })
+                            break;
                         }
                     } else 
                     {
