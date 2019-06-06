@@ -41,7 +41,13 @@ module.exports = new Command (
                                     "https://i.imgur.com/qYvAX4j.jpg",
                                     "https://i.imgur.com/KWRWAMy.jpg",
                                     "https://i.imgur.com/2tYlzUZ.jpg",
-                                    "https://i.imgur.com/xAIEI1e.jpg"
+                                    "https://i.imgur.com/xAIEI1e.jpg",
+                                    "https://i.imgur.com/bVLMIHw.jpg",
+                                    "https://i.imgur.com/oVfPr0O.png",
+                                    "https://i.imgur.com/mqOH1oB.jpg",
+                                    "https://i.imgur.com/O34GqOm.jpg",
+                                    "https://i.imgur.com/xl8F55D.jpg",
+                                    "https://i.imgur.com/21pxxup.png"
                                 ]
                                 let i = Math.floor(Math.random() * images.length)
                                 message.channel.send('', { files: [ images[i] ] })
