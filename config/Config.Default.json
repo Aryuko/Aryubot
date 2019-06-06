@@ -71,6 +71,11 @@
 		{
 			"enabled" : true,
 			"permissionGroup" : "Aryu"
+		},
+		"Ary" : 
+		{
+			"enabled" : true,
+			"permissionGroup" : false
 		}
 	}
 }
